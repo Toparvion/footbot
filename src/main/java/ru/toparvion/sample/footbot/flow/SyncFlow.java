@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
-import org.springframework.integration.webflux.dsl.WebFlux;
+import org.springframework.integration.http.dsl.Http;
 import org.springframework.messaging.Message;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.toparvion.sample.footbot.model.livescore.Event;
 import ru.toparvion.sample.footbot.model.livescore.LivescoreResponse;
@@ -18,14 +18,17 @@ import ru.toparvion.sample.footbot.model.livescore.LivescoreResponse;
 import java.net.URI;
 
 import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.integration.dsl.channel.MessageChannels.direct;
+import static ru.toparvion.sample.footbot.flow.IntegrationConstants.LIVE_EVENTS_REQUEST_CHANNEL;
+import static ru.toparvion.sample.footbot.flow.IntegrationConstants.LIVE_EVENTS_RESPONSE_CHANNEL;
 
 /**
  * @author Toparvion
  * @since v0.0.1
  */
-@Configuration
 @Slf4j
+@Configuration
+@IntegrationComponentScan
 public class SyncFlow {
 
   private final String apiEndpoint;
@@ -44,24 +47,22 @@ public class SyncFlow {
   @Bean
   public IntegrationFlow liveEventsFlow() {
     return IntegrationFlows
-        .from(WebFlux.inboundGateway("/events")
-            .requestMapping(m -> m.produces(APPLICATION_JSON_VALUE)
-                                  .methods(GET)))
+        .from(direct(LIVE_EVENTS_REQUEST_CHANNEL))
         .log()
-        .handle(WebFlux.outboundGateway(this::buildLivescoreUri)
-                       .httpMethod(GET)
-                       .expectedResponseType(new ParameterizedTypeReference<LivescoreResponse<Event>>(){})
-                       .replyPayloadToFlux(false))
-//        .log()
+        .handle(Http.outboundGateway(this::buildLivescoreUri)
+            .httpMethod(GET)
+            .expectedResponseType(new ParameterizedTypeReference<LivescoreResponse<Event>>(){}))
+        .log()
+        .channel(direct(LIVE_EVENTS_RESPONSE_CHANNEL))
         .get();
   }
 
-  private URI buildLivescoreUri(Message<MultiValueMap<String, String>> req) {
+  private URI buildLivescoreUri(Message<String> req) {
     URI uri = UriComponentsBuilder.fromUriString(apiEndpoint)
         .path("/scores/events.json")
         .queryParam("key", apiKey)
         .queryParam("secret", apiSecret)
-        .queryParam("id", req.getPayload().getFirst("matchId"))
+        .queryParam("id", req.getPayload())
         .build()
         .toUri();
     log.info("Livescore API request URI: {}", uri);
