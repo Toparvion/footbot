@@ -31,6 +31,7 @@ dependencies {
     // compile('org.springframework.boot:spring-boot-starter-jdbc')
     compile("org.springframework.integration:spring-integration-http")
     // compile("org.springframework.integration:spring-integration-twitter")
+    compile("org.telegram:telegrambots-abilities:3.6.1")
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')
     compileOnly('org.projectlombok:lombok')
 
