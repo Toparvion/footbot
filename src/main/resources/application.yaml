@@ -1,7 +1,9 @@
 spring:
   application:
     name: footbot
-
+  datasource:
+    url: ${JDBC_DATABASE_URL:}
+#Drafted JDBC metadata store support
 telegram:
   bot:
     name: ToparvionFootBot

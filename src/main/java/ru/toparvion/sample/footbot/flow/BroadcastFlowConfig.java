@@ -7,8 +7,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.channel.NullChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
+import org.springframework.integration.handler.MessageProcessor;
 import org.springframework.integration.handler.advice.IdempotentReceiverInterceptor;
+import org.springframework.integration.jdbc.metadata.JdbcMetadataStore;
 import org.springframework.integration.selector.MetadataStoreSelector;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
@@ -29,24 +32,30 @@ public class BroadcastFlowConfig {
   private final MatchEventsProvider matchEventsProvider;
 
   @Bean
-  public IntegrationFlow broadcastFlow() {
+  public IntegrationFlow broadcastFlow(IdempotentReceiverInterceptor antiDuplicateSubFilter) {
     return from(matchEventsProvider, spec -> spec.poller(fixedDelay(60, SECONDS, 0)))
             .split()
             .filter(Event.class,
                     event -> (event.getType() != Type.text),
-                    conf -> conf.advice(antiDuplicateSubFilter()))
+                    conf -> conf.advice(antiDuplicateSubFilter))
             .transform(Event.class, this::composeEventText)
             .handle(message -> sendEventViaBot((String) message.getPayload()))
             .get();
   }
 
   @Bean
-  public IdempotentReceiverInterceptor antiDuplicateSubFilter() {
-    MetadataStoreSelector messageSelector = new MetadataStoreSelector(message -> ((Event) message.getPayload()).getId());
+  public IdempotentReceiverInterceptor antiDuplicateSubFilter(JdbcMetadataStore metadataStore) {
+    MessageProcessor<String> keyStrategy = message -> ((Event) message.getPayload()).getId();
+    MetadataStoreSelector messageSelector = new MetadataStoreSelector(keyStrategy, metadataStore);
     IdempotentReceiverInterceptor interceptor = new IdempotentReceiverInterceptor(messageSelector);
     interceptor.setDiscardChannel(new NullChannel());
     interceptor.setThrowExceptionOnRejection(false);
     return interceptor;
+  }
+
+  @Bean
+  public JdbcMetadataStore metadataStore(JdbcTemplate jdbcTemplate) {
+    return new JdbcMetadataStore(jdbcTemplate);
   }
 
   private void sendEventViaBot(String eventText) {
