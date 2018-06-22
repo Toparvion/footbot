@@ -2,12 +2,6 @@ spring:
   application:
     name: footbot
 
-livescore:
-  api:
-    endpoint: http://livescore-api.com/api-client
-    key: [taken-from-env]
-    secret: [taken-from-env]
-
 telegram:
   bot:
     name: ToparvionFootBot

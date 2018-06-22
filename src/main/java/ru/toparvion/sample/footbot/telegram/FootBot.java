@@ -23,7 +23,7 @@ public class FootBot extends AbilityBot {
 
   private BotSession botSession = null;
 
-  public FootBot(String botUserName, String botToken, int botCreatorId, DefaultBotOptions options) {
+  FootBot(String botUserName, String botToken, int botCreatorId, DefaultBotOptions options) {
     super(botToken, botUserName, options);
     this.botUserName = botUserName;
     this.botCreatorId = botCreatorId;
@@ -33,9 +33,9 @@ public class FootBot extends AbilityBot {
   @PostConstruct
   public void startBotSession() {
     if (botSession != null) {
+      log.warn("Bot session is already started. Skipping double start.");
       return;
     }
-
     log.debug("Starting FootBot session...");
     try {
       TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
@@ -54,6 +54,7 @@ public class FootBot extends AbilityBot {
     log.info("FootBot session stopped.");
   }
 
+  @SuppressWarnings("unused")
   public Ability sayHelloWorld() {
     return Ability
             .builder()
