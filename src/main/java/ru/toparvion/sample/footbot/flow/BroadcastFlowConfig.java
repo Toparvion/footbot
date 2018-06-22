@@ -16,10 +16,7 @@ import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Event;
-import ru.toparvion.sample.footbot.model.sportexpress.event.Type;
 import ru.toparvion.sample.footbot.telegram.FootBot;
-
-import java.util.Arrays;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.springframework.integration.dsl.IntegrationFlows.from;
@@ -38,7 +35,7 @@ public class BroadcastFlowConfig {
     return from(matchEventsProvider, spec -> spec.poller(fixedDelay(60, SECONDS, 0)))
             .split()
             .filter(Event.class,
-                    event -> Arrays.asList(Type.values()).contains(event.getType()),
+                    event -> true,
                     //event -> (event.getType() != Type.text),
                     conf -> conf.advice(antiDuplicateSubFilter))
             .transform(Event.class, this::composeEventText)
