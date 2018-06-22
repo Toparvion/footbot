@@ -19,6 +19,8 @@ import ru.toparvion.sample.footbot.model.sportexpress.event.Event;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Type;
 import ru.toparvion.sample.footbot.telegram.FootBot;
 
+import java.util.Arrays;
+
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.springframework.integration.dsl.IntegrationFlows.from;
 import static org.springframework.integration.dsl.Pollers.fixedDelay;
@@ -36,7 +38,8 @@ public class BroadcastFlowConfig {
     return from(matchEventsProvider, spec -> spec.poller(fixedDelay(60, SECONDS, 0)))
             .split()
             .filter(Event.class,
-                    event -> (event.getType() != Type.text),
+                    event -> Arrays.asList(Type.values()).contains(event.getType()),
+                    //event -> (event.getType() != Type.text),
                     conf -> conf.advice(antiDuplicateSubFilter))
             .transform(Event.class, this::composeEventText)
             .handle(message -> sendEventViaBot((String) message.getPayload()))
