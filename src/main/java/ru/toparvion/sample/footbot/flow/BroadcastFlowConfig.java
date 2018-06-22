@@ -45,7 +45,7 @@ public class BroadcastFlowConfig {
 
   @Bean
   public IdempotentReceiverInterceptor antiDuplicateSubFilter(JdbcMetadataStore metadataStore) {
-    MessageProcessor<String> keyStrategy = message -> ((Event) message.getPayload()).getId();
+    MessageProcessor<String> keyStrategy = message -> Integer.toHexString(message.getPayload().hashCode());
     MetadataStoreSelector messageSelector = new MetadataStoreSelector(keyStrategy, metadataStore);
     IdempotentReceiverInterceptor interceptor = new IdempotentReceiverInterceptor(messageSelector);
     interceptor.setDiscardChannel(new NullChannel());

@@ -4,8 +4,6 @@ import lombok.Data;
 import ru.toparvion.sample.footbot.model.sportexpress.Command;
 import ru.toparvion.sample.footbot.model.sportexpress.Player;
 
-import java.util.Objects;
-
 @Data
 public class Event {
   String id;
@@ -21,17 +19,4 @@ public class Event {
 
   Player playerIn;
   Player playerOut;
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Event event = (Event) o;
-    return Objects.equals(id, event.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id);
-  }
 }
