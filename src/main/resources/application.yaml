@@ -3,7 +3,10 @@ spring:
     name: footbot
   datasource:
     url: ${JDBC_DATABASE_URL:}
-#Drafted JDBC metadata store support
+  integration:
+    jdbc:
+      initialize-schema: always
+
 telegram:
   bot:
     name: ToparvionFootBot
@@ -14,8 +17,8 @@ sportexpress:
   broadcastUri: https://www.sport-express.ru/services/match/football/{matchId}/online/se/?json=1
   schedule:
     - id: 236355
-#      date: 22.06.18 15:00 Asia/Novosibirsk
-      date: 21.06.18 18:00 Europe/Moscow
+      date: 22.06.18 17:00 Asia/Novosibirsk
+#      date: 21.06.18 18:00 Europe/Moscow
       title: Франция - Перу
     - id: 236359
       date: 22.06.18 15:00 Europe/Moscow
