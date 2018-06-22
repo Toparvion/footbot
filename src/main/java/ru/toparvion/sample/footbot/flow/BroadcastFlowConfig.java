@@ -9,18 +9,13 @@ import org.springframework.integration.channel.NullChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.handler.advice.IdempotentReceiverInterceptor;
 import org.springframework.integration.selector.MetadataStoreSelector;
-import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
-import ru.toparvion.sample.footbot.model.sportexpress.Match;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Event;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Type;
 import ru.toparvion.sample.footbot.telegram.FootBot;
 
-import java.util.List;
-
-import static java.util.Collections.emptyList;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.springframework.integration.dsl.IntegrationFlows.from;
 import static org.springframework.integration.dsl.Pollers.fixedDelay;
@@ -29,13 +24,13 @@ import static org.springframework.integration.dsl.Pollers.fixedDelay;
 @Slf4j
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class BroadcastFlowConfig {
-  private static final String INFO_SOURCE_URI = "https://www.sport-express.ru/services/match/football/236355/online/se/?json=1";
 
   private final FootBot footBot;
+  private final MatchEventsProvider matchEventsProvider;
 
   @Bean
   public IntegrationFlow broadcastFlow() {
-    return from(this::fetchEvents, spec -> spec.poller(fixedDelay(60, SECONDS)))
+    return from(matchEventsProvider, spec -> spec.poller(fixedDelay(60, SECONDS, 0)))
             .split()
             .filter(Event.class,
                     event -> (event.getType() != Type.text),
@@ -57,7 +52,7 @@ public class BroadcastFlowConfig {
   private void sendEventViaBot(String eventText) {
     try {
       Message sentMessage = footBot.execute(new SendMessage((long) footBot.creatorId(), eventText));
-      log.info("Отправлено сообщение с id={}: {}", sentMessage.getMessageId(), sentMessage.getText());
+      log.info("Отправлено Telegram сообщение с id={}: {}", sentMessage.getMessageId(), sentMessage.getText());
 
     } catch (TelegramApiException e) {
       log.error("Не удалось отправить сообщение.", e);
@@ -90,22 +85,11 @@ public class BroadcastFlowConfig {
                 .append(event.getPlayer().getName())
                 .append(" (")
                 .append(event.getCommand().getName())
-                .append(" )");
+                .append(")");
         return sb.toString();
       default:
         return event.getText();
     }
-  }
-
-  private List<Event> fetchEvents() {
-    RestTemplate restTemplate = new RestTemplate();
-    Match match = restTemplate.getForObject(INFO_SOURCE_URI, Match.class);
-    if (match == null) {
-      log.warn("Матч не найден.");
-      return emptyList();
-    }
-    log.info("Получен матч: {}", match);
-    return match.getEvents();
   }
 
 }

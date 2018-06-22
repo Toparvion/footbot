@@ -2,6 +2,7 @@ package ru.toparvion.sample.footbot.model.sportexpress.event;
 
 import lombok.Data;
 import ru.toparvion.sample.footbot.model.sportexpress.Command;
+import ru.toparvion.sample.footbot.model.sportexpress.Player;
 
 import java.util.Objects;
 

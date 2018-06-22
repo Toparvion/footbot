@@ -8,11 +8,29 @@ telegram:
     token: [taken-from-env]
     creatorId: 129560882
 
+sportexpress:
+  broadcastUri: https://www.sport-express.ru/services/match/football/{matchId}/online/se/?json=1
+  schedule:
+    - id: 236355
+#      date: 22.06.18 15:00 Asia/Novosibirsk
+      date: 21.06.18 18:00 Europe/Moscow
+      title: Франция - Перу
+    - id: 236359
+      date: 22.06.18 15:00 Europe/Moscow
+      title: Бразилия - Коста-Рика
+    - id: 236358
+      date: 22.06.18 18:00 Europe/Moscow
+      title: Нигерия - Исландия
+    - id: 236360
+#      date: 22.06.18 15:00 Asia/Novosibirsk
+      date: 22.06.18 21:00 Europe/Moscow
+      title: Сербия - Швейцария
+
 logging:
   level:
     org.springframework.integration: INFO
     org.springframework.integration.http.support.DefaultHttpHeaderMapper: INFO
-    ru.toparvion.sample.footbot.telegram.FootBot: DEBUG
+    ru.toparvion.sample.footbot: DEBUG
   pattern:
     console: '%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}'
     dateformat: HH:mm:ss.SSS

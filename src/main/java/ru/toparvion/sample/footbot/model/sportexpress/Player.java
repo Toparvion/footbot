@@ -1,4 +1,4 @@
-package ru.toparvion.sample.footbot.model.sportexpress.event;
+package ru.toparvion.sample.footbot.model.sportexpress;
 
 import lombok.Data;
 
