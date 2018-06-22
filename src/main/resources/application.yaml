@@ -16,7 +16,7 @@ telegram:
 
 logging:
   level:
-    org.springframework.integration: DEBUG
+    org.springframework.integration: INFO
     org.springframework.integration.http.support.DefaultHttpHeaderMapper: INFO
     ru.toparvion.sample.footbot.telegram.FootBot: DEBUG
   pattern:
