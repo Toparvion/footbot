@@ -41,6 +41,16 @@ sportexpress:
       date: 23.06.18 21:00 Europe/Moscow
       title: Германия - Швеция
 
+    - id: 236364
+      date: 24.06.18 15:00 Europe/Moscow
+      title: Англия - Панама
+    - id: 236366
+      date: 24.06.18 18:00 Europe/Moscow
+      title: Япония - Сенегал
+    - id: 236365
+      date: 24.06.18 21:00 Europe/Moscow
+      title: Польша - Колумбия
+
 logging:
   level:
     org.springframework.integration: INFO

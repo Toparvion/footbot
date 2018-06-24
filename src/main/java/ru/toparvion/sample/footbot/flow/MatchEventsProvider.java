@@ -17,7 +17,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.toparvion.sample.footbot.flow.IntegrationConstants.CURRENT_MATCH_SCORE_HEADER;
+import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_SCORE_HEADER;
 
 @Service
 @Slf4j

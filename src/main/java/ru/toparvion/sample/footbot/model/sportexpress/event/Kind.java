@@ -4,5 +4,6 @@ public enum Kind {
   goal,
   penalty,
   yellow,
+  yellow2,
   red
 }

@@ -1,4 +1,4 @@
-package ru.toparvion.sample.footbot.flow;
+package ru.toparvion.sample.footbot.util;
 
 public final class IntegrationConstants {
   private IntegrationConstants(){}

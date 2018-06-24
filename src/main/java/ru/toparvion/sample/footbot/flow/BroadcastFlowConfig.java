@@ -17,7 +17,9 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Event;
 import ru.toparvion.sample.footbot.telegram.FootBot;
+import ru.toparvion.sample.footbot.util.Util;
 
+import static java.util.Objects.requireNonNull;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.springframework.integration.dsl.IntegrationFlows.from;
 import static org.springframework.integration.dsl.Pollers.fixedDelay;
@@ -46,7 +48,10 @@ public class BroadcastFlowConfig {
   @Bean
   public IdempotentReceiverInterceptor antiDuplicateSubFilter(JdbcMetadataStore metadataStore) {
     MessageProcessor<String> keyStrategy = message -> Integer.toHexString(message.getPayload().hashCode());
-    MetadataStoreSelector messageSelector = new MetadataStoreSelector(keyStrategy, metadataStore);
+    MessageProcessor<String> valueStrategy = message -> Util.nvls(
+        ((Event) message.getPayload()).getText(),
+        requireNonNull(message.getHeaders().getTimestamp()).toString());
+    MetadataStoreSelector messageSelector = new MetadataStoreSelector(keyStrategy, valueStrategy, metadataStore);
     IdempotentReceiverInterceptor interceptor = new IdempotentReceiverInterceptor(messageSelector);
     interceptor.setDiscardChannel(new NullChannel());
     interceptor.setThrowExceptionOnRejection(false);
@@ -84,7 +89,10 @@ public class BroadcastFlowConfig {
         StringBuilder sb = new StringBuilder();
         switch (event.getKind()) {
           case yellow:
-            sb.append("Желтая");
+            sb.append("Жёлтая");
+            break;
+          case yellow2:
+            sb.append("Вторая жёлтая");
             break;
           case red:
             sb.append("Красная");
