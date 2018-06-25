@@ -51,6 +51,13 @@ sportexpress:
       date: 24.06.18 21:00 Europe/Moscow
       title: Польша - Колумбия
 
+    - id: 236367
+      date: 25.06.18 17:00 Europe/Moscow
+      title: Уругвай - Россия
+    - id: 236370
+      date: 25.06.18 21:00 Europe/Moscow
+      title: Испания - Марокко
+
 logging:
   level:
     org.springframework.integration: INFO
