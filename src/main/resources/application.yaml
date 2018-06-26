@@ -4,6 +4,7 @@ spring:
   datasource:
     url: ${JDBC_DATABASE_URL:}
     initialization-mode: always
+    continue-on-error: true
   integration:
     jdbc:
       initialize-schema: always
