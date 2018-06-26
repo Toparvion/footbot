@@ -1,5 +1,6 @@
 package ru.toparvion.sample.footbot.telegram;
 
+import com.vdurmont.emoji.EmojiManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
@@ -28,6 +29,7 @@ import ru.toparvion.sample.footbot.flow.BroadcastFlowConfig;
 import ru.toparvion.sample.footbot.model.db.BotUser;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Event;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Type;
+import ru.toparvion.sample.footbot.util.Util;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -105,8 +107,7 @@ public class FootBot extends AbilityBot {
             .build();
   }
 
-  @SuppressWarnings("unused")
-  public Reply reactOnSelectReply() {
+  @SuppressWarnings("unused")public Reply reactOnSelectReply() {
     return Reply.of(this::registerUser, Flag.CALLBACK_QUERY);
   }
 
@@ -121,15 +122,16 @@ public class FootBot extends AbilityBot {
     flowConfig.startUserFlow(user.getId(), chosenLevel, this::sendEventViaBot);
 
     Message originMessage = callbackQuery.getMessage();
+    String emoji = EmojiManager.getForAlias("white_check_mark").getUnicode();
     if (originMessage != null) {
       EditMessageText editMessage = new EditMessageText();
       editMessage.setMessageId(originMessage.getMessageId());
       editMessage.enableMarkdown(true);
       editMessage.setChatId(chatId);
-      editMessage.setText("ОК! Активирована подписка на " + chosenLevel);
+      editMessage.setText(emoji + " Активирована подписка на " + chosenLevel);
       silent.execute(editMessage);
     } else {
-      silent.sendMd("ОК! Активирована подписка на " + chosenLevel, chatId);
+      silent.sendMd(emoji + " Активирована подписка на " + chosenLevel, chatId);
     }
   }
 
@@ -168,11 +170,12 @@ public class FootBot extends AbilityBot {
   private String composeEventText(Event event, Map<String, Object> metaData) {
     StringBuilder sb = new StringBuilder();
     if (!"0’".equals(event.getFullMinute())) {
-      sb.append("_").append(event.getFullMinute()).append("_ ");
+      sb.append("_").append(event.getFullMinute()).append("_  ");
     }
+    String convertedText = Util.convertEmojies(event.getText());
     switch (event.getType()) {
       case text:
-        sb.append(event.getText());
+        sb.append(convertedText);
         break;
       case change:
         sb.append(String.format("Замена (%s): %s -> %s", event.getCommand().getName(),
@@ -183,12 +186,12 @@ public class FootBot extends AbilityBot {
         if ("1".equals(event.getChangedStateId())) {      // 1 - end of match
           String score = (String) metaData.get(CURRENT_MATCH_SCORE_HEADER);
           if (StringUtils.hasText(score)) {
-            sb.append(": ").append(score);
+            sb.append(" со счётом ").append(score);
           }
         }
         break;
       case goal:
-        sb.append(String.format("%s\n(Автор гола: %s (%s), текущий счёт: %s)", event.getText(),
+        sb.append(String.format("%s\n(автор гола: %s (%s), текущий счёт: %s)", convertedText,
             event.getPlayer().getName(), event.getCommand().getName(), event.getInfo().getScore()));
         break;
       case card:
@@ -210,7 +213,7 @@ public class FootBot extends AbilityBot {
             .append(")");
         break;
       default:
-        sb.append(event.getText());
+        sb.append(convertedText);
     }
     return sb.toString();
   }

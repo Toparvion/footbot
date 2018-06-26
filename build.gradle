@@ -32,6 +32,7 @@ dependencies {
     compile("org.springframework.integration:spring-integration-http")
     compile("org.springframework.integration:spring-integration-jdbc")
     compile("org.telegram:telegrambots-abilities:3.6.1")
+    compile("com.vdurmont:emoji-java:4.0.0")
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')
     compileOnly('org.projectlombok:lombok')
 
