@@ -3,6 +3,7 @@ spring:
     name: footbot
   datasource:
     url: ${JDBC_DATABASE_URL:}
+    initialization-mode: always
   integration:
     jdbc:
       initialize-schema: always
@@ -52,11 +53,19 @@ sportexpress:
       title: Польша - Колумбия
 
     - id: 236367
-      date: 25.06.18 17:00 Europe/Moscow
+      #date: 25.06.18 17:00 Europe/Moscow
+      date: 26.06.18 13:00 Asia/Novosibirsk
       title: Уругвай - Россия
     - id: 236370
       date: 25.06.18 21:00 Europe/Moscow
       title: Испания - Марокко
+
+    - id: 236371
+      date: 26.06.18 17:00 Europe/Moscow
+      title: Дания - Франция
+    - id: 236373
+      date: 26.06.18 21:00 Europe/Moscow
+      title: Нигерия - Аргентина
 
 logging:
   level:

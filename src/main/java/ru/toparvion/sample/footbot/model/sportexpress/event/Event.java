@@ -9,9 +9,11 @@ public class Event {
   String id;
   Type type;
   String minute;
+  String fullMinute;
   Kind kind;
   String text;
   String changedStateName;
+  String changedStateId;
 
   Player player;
   Command command;
