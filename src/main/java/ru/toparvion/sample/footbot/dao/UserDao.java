@@ -20,22 +20,11 @@ public class UserDao {
   public void mergeUser(BotUser botUser) {
 //    String sql = "MERGE INTO BOT_USERS KEY(USER_ID) VALUES(:userId, :userName, :level)";
     String sql =
-        "MERGE INTO BOT_USERS t " +
-        "USING (VALUES(:userId, :userName, :level)) v " +
-            "ON t.USER_ID = v.column1 " +
-            "WHEN NOT MATCHED " +
-            " INSERT VALUES(v.column1, v.column2, v.column3) " +
-            "WHEN MATCHED " +
-            " UPDATE SET USER_ID = v.column1, USER_NAME = v.column2, LEVEL = v.column3";
+      "INSERT INTO BOT_USERS VALUES(:userId, :userName, :level) " +
+          "ON CONFLICT (USER_ID) " +
+          "DO UPDATE " +
+          " SET USER_ID=:userId, USER_NAME=:userName, LEVEL=:level";
 
-    String sqlExmaple =
-        "MERGE INTO wines w\n" +
-            "USING (VALUES('Chateau Lafite 2003', '24')) v\n" +
-            "ON v.column1 = w.winename\n" +
-            "WHEN NOT MATCHED \n" +
-            "  INSERT VALUES(v.column1, v.column2)\n" +
-            "WHEN MATCHED\n" +
-            "  UPDATE SET stock = stock + v.column2;";
     SqlParameterSource params = new BeanPropertySqlParameterSource(botUser);
     jdbcTemplate.update(sql, params);
   }
