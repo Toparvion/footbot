@@ -29,7 +29,6 @@ import ru.toparvion.sample.footbot.flow.BroadcastFlowConfig;
 import ru.toparvion.sample.footbot.model.db.BotUser;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Event;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Type;
-import ru.toparvion.sample.footbot.util.Util;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -42,6 +41,8 @@ import static org.telegram.abilitybots.api.objects.Locality.USER;
 import static org.telegram.abilitybots.api.objects.Privacy.PUBLIC;
 import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_SCORE_HEADER;
 import static ru.toparvion.sample.footbot.util.IntegrationConstants.USER_ID_HEADER;
+import static ru.toparvion.sample.footbot.util.Util.convertEmojies;
+import static ru.toparvion.sample.footbot.util.Util.nvls;
 
 @Slf4j
 public class FootBot extends AbilityBot {
@@ -172,10 +173,9 @@ public class FootBot extends AbilityBot {
     if (!"0’".equals(event.getFullMinute())) {
       sb.append("_").append(event.getFullMinute()).append("_  ");
     }
-    String convertedText = Util.convertEmojies(event.getText());
     switch (event.getType()) {
       case text:
-        sb.append(convertedText);
+        sb.append(convertEmojies(event.getText()));
         break;
       case change:
         sb.append(String.format("Замена (%s): %s -> %s", event.getCommand().getName(),
@@ -191,7 +191,7 @@ public class FootBot extends AbilityBot {
         }
         break;
       case goal:
-        sb.append(String.format("%s\n(автор гола: %s (%s), текущий счёт: %s)", convertedText,
+        sb.append(String.format("%s\n(автор гола: %s (%s), текущий счёт: %s)", convertEmojies(event.getText()),
             event.getPlayer().getName(), event.getCommand().getName(), event.getInfo().getScore()));
         break;
       case card:
@@ -213,7 +213,7 @@ public class FootBot extends AbilityBot {
             .append(")");
         break;
       default:
-        sb.append(convertedText);
+        sb.append(convertEmojies(nvls(event.getText(), "")));
     }
     return sb.toString();
   }
