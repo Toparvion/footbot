@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.util.StringUtils;
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
 import org.telegram.abilitybots.api.objects.Flag;
@@ -37,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.singletonList;
+import static org.springframework.util.StringUtils.hasText;
 import static org.telegram.abilitybots.api.objects.Locality.USER;
 import static org.telegram.abilitybots.api.objects.Privacy.PUBLIC;
 import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_SCORE_HEADER;
@@ -100,7 +100,7 @@ public class FootBot extends AbilityBot {
   public Ability listLevelsAbility() {
     return Ability
             .builder()
-            .name("subscribe")
+            .name("start")
             .info("Подписаться на события мундиаля")
             .locality(USER)
             .privacy(PUBLIC)
@@ -117,7 +117,7 @@ public class FootBot extends AbilityBot {
     Type chosenLevel = Type.valueOf(callbackQuery.getData());
     Long chatId = AbilityUtils.getChatId(update);
     User user = AbilityUtils.getUser(update);
-    BotUser botUser = new BotUser(user.getId(), user.getUserName(), chosenLevel.name());
+    BotUser botUser = new BotUser(user.getId(), composeUserName(user), chosenLevel.name());
     log.info("Сформирован пользовательский выбор: {}", botUser);
     userDao.mergeUser(botUser);
     flowConfig.startUserFlow(user.getId(), chosenLevel, this::sendEventViaBot);
@@ -153,6 +153,24 @@ public class FootBot extends AbilityBot {
     }
   }
 
+  private void listLevels(MessageContext ctx) {
+    String text = "Выбери желаемый уровень подробностей:";
+    SendMessage sendMessageCommand = new SendMessage(ctx.chatId(), text);
+    sendMessageCommand.enableMarkdown(true);
+
+    InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+    List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
+    for (Type type: Type.values()) {
+      InlineKeyboardButton button = new InlineKeyboardButton(type.name().toUpperCase());
+      button.setCallbackData(type.name());
+      buttons.add(singletonList(button));
+    }
+    inlineKeyboardMarkup.setKeyboard(buttons);
+    sendMessageCommand.setReplyMarkup(inlineKeyboardMarkup);
+    silent.execute(sendMessageCommand);
+    log.info("Отправлены варианты выбора.");
+  }
+
   @EventListener(ApplicationStartedEvent.class)
   public void restoreSubscriptions() {
     List<BotUser> botUsers = userDao.fetchAllUsers();
@@ -163,7 +181,7 @@ public class FootBot extends AbilityBot {
     log.debug("Восстанавливаю подписки по {} пользователям...", botUsers.size());
     for (BotUser botUser: botUsers) {
       flowConfig.startUserFlow(botUser.getUserId(), botUser.getLevelAsType(), this::sendEventViaBot);
-      log.debug("Подписка пользователя {} ({}) с уровнем {} восстанавлена.", botUser.getUserId(),
+      log.debug("Подписка пользователя {} ({}) с уровнем {} восстановлена.", botUser.getUserId(),
           botUser.getUserName(), botUser.getLevel());
     }
   }
@@ -185,8 +203,8 @@ public class FootBot extends AbilityBot {
         sb.append(event.getChangedStateName());
         if ("1".equals(event.getChangedStateId())) {      // 1 - end of match
           String score = (String) metaData.get(CURRENT_MATCH_SCORE_HEADER);
-          if (StringUtils.hasText(score)) {
-            sb.append(" со счётом ").append(score);
+          if (hasText(score)) {
+            sb.append(". Счёт ").append(score);
           }
         }
         break;
@@ -218,6 +236,17 @@ public class FootBot extends AbilityBot {
     return sb.toString();
   }
 
+  private String composeUserName(User user) {
+    StringBuilder sb = new StringBuilder(user.getFirstName());
+    if (hasText(user.getLastName())) {
+      sb.append(' ').append(user.getLastName());
+    }
+    if (hasText(user.getUserName())) {
+      sb.append(" (@").append(user.getUserName()).append(")");
+    }
+    return sb.toString();
+  }
+
   @Override
   public String getBotUsername() {
     return botUserName;
@@ -231,23 +260,5 @@ public class FootBot extends AbilityBot {
   @Override
   public int creatorId() {
     return botCreatorId;
-  }
-
-  private void listLevels(MessageContext ctx) {
-    String text = "Выбери желаемый уровень подробностей:";
-    SendMessage sendMessageCommand = new SendMessage(ctx.chatId(), text);
-    sendMessageCommand.enableMarkdown(true);
-
-    InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-    List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
-    for (Type type: Type.values()) {
-      InlineKeyboardButton button = new InlineKeyboardButton(type.name().toUpperCase());
-      button.setCallbackData(type.name());
-      buttons.add(singletonList(button));
-    }
-    inlineKeyboardMarkup.setKeyboard(buttons);
-    sendMessageCommand.setReplyMarkup(inlineKeyboardMarkup);
-    silent.execute(sendMessageCommand);
-    log.info("Отправлены варианты выбора.");
   }
 }
