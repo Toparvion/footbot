@@ -27,6 +27,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.springframework.integration.dsl.IntegrationFlows.from;
 import static org.springframework.integration.dsl.Pollers.fixedDelay;
 import static org.springframework.integration.dsl.channel.MessageChannels.publishSubscribe;
+import static org.springframework.util.StringUtils.hasText;
+import static ru.toparvion.sample.footbot.model.sportexpress.event.Type.text;
 import static ru.toparvion.sample.footbot.util.IntegrationConstants.*;
 
 @Configuration
@@ -39,10 +41,11 @@ public class BroadcastFlowConfig {
 
   @Bean
   public IntegrationFlow broadcastFlow(IdempotentReceiverInterceptor antiDuplicateSubFilter) {
-    return from(matchEventsProvider, spec -> spec.poller(fixedDelay(60, SECONDS, 60)))
+    return from(matchEventsProvider,
+                spec -> spec.poller(fixedDelay(60, SECONDS, 60)))
         .split()
         .filter(Event.class,
-            event -> true /*TODO можно вставить что-нибудь по-сложнее*/,
+            event -> (event.getType() == text && !hasText(event.getText())),
             conf -> conf.advice(antiDuplicateSubFilter))
         .channel(publishSubscribe(BROADCAST_CHANNEL))
         .get();
@@ -66,7 +69,7 @@ public class BroadcastFlowConfig {
             .autoStartup(true)
             .id(userFlowId)
             .register();
-    log.info("Зарегистрирован новый подписчик {} с уровнем {} (регистрация {})", userId, level,
+    log.info("Зарегистрирован подписчик {} с уровнем {} (регистрация {})", userId, level,
         userFlowRegistration.getId());
   }
 
