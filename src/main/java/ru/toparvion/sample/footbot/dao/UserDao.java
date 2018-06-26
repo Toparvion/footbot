@@ -31,6 +31,6 @@ public class UserDao {
 
   public List<BotUser> fetchAllUsers() {
     String sql = "SELECT user_id as userId, user_name as userName, level FROM BOT_USERS";
-    return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>());
+    return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(BotUser.class));
   }
 }
