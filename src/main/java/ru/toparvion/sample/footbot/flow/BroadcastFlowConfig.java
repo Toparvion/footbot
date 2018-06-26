@@ -45,7 +45,7 @@ public class BroadcastFlowConfig {
                 spec -> spec.poller(fixedDelay(60, SECONDS, 60)))
         .split()
         .filter(Event.class,
-            event -> (event.getType() == text && !hasText(event.getText())),
+            event -> !(event.getType() == text && !hasText(event.getText())),
             conf -> conf.advice(antiDuplicateSubFilter))
         .channel(publishSubscribe(BROADCAST_CHANNEL))
         .get();
