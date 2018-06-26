@@ -19,6 +19,9 @@ import java.util.Optional;
 
 import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_SCORE_HEADER;
 
+/**
+ * Источник живых данных о происходящих играх
+ */
 @Service
 @Slf4j
 public class MatchEventsProvider implements MessageSource<List<Event>> {
