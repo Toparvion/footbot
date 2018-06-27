@@ -19,7 +19,7 @@ sportexpress:
   broadcastUri: https://www.sport-express.ru/services/match/football/{matchId}/online/se/?json=1
   schedule:
     - id: 236351
-      date: 27.06.18 12:00 Asia/Novosibirsk
+      date: 27.06.18 19:00 Asia/Novosibirsk
       # date: 21.06.18 18:00 Europe/Moscow
       title: Россия - Египет
 
@@ -67,6 +67,13 @@ sportexpress:
     - id: 236373
       date: 26.06.18 21:00 Europe/Moscow
       title: Нигерия - Аргентина
+
+    - id: 236377
+      date: 27.06.18 17:00 Europe/Moscow
+      title: Корея - Германия
+    - id: 236375
+      date: 27.06.18 21:00 Europe/Moscow
+      title: Сербия - Бразилия
 
 logging:
   level:
