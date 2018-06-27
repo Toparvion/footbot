@@ -7,6 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.channel.NullChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
+import org.springframework.integration.dsl.StandardIntegrationFlow;
+import org.springframework.integration.dsl.context.IntegrationFlowContext;
+import org.springframework.integration.dsl.context.IntegrationFlowRegistration;
 import org.springframework.integration.handler.MessageProcessor;
 import org.springframework.integration.handler.advice.IdempotentReceiverInterceptor;
 import org.springframework.integration.jdbc.metadata.JdbcMetadataStore;
@@ -14,14 +17,18 @@ import org.springframework.integration.selector.MetadataStoreSelector;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.messaging.Message;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Event;
+import ru.toparvion.sample.footbot.model.sportexpress.event.Type;
 import ru.toparvion.sample.footbot.util.Util;
 
+import static java.util.Collections.singletonMap;
 import static java.util.Objects.requireNonNull;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.springframework.integration.dsl.IntegrationFlows.from;
 import static org.springframework.integration.dsl.Pollers.fixedDelay;
+import static org.springframework.integration.dsl.channel.MessageChannels.publishSubscribe;
 import static org.springframework.util.StringUtils.hasText;
 import static ru.toparvion.sample.footbot.model.sportexpress.event.Type.text;
+import static ru.toparvion.sample.footbot.util.IntegrationConstants.*;
 
 /**
  * Основная конфигурация интеграционного конвейера
@@ -31,23 +38,52 @@ import static ru.toparvion.sample.footbot.model.sportexpress.event.Type.text;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class BroadcastFlowConfig {
 
+  private final IntegrationFlowContext flowContext;
+
   /**
    * Общая часть конвейера (единственная)
    */
   @Bean
   public IntegrationFlow broadcastFlow(MatchEventsProvider matchEventsProvider,
                                        IdempotentReceiverInterceptor antiDuplicateSubFilter) {
-    return from(matchEventsProvider, spec -> spec.poller(fixedDelay(15, SECONDS, 0)))
+    return from(matchEventsProvider, spec -> spec.poller(fixedDelay(15, SECONDS, 30)))
           .split()
           .filter(Event.class, event -> !(event.getType() == text && !hasText(event.getText())),
-              conf -> conf.advice(antiDuplicateSubFilter))
-          .log(BroadcastFlowConfig::composeEventLogRecord)
+                  spec -> spec.advice(antiDuplicateSubFilter))
+          .channel(publishSubscribe(BROADCAST_CHANNEL))
           .get();
   }
 
+  /**
+   * Пользовательская часть конвейера (множественная)
+   */
+  public void startUserFlow(int userId, Type level) {
+    String userFlowId = USER_FLOW_PREFIX + userId;
+    if (flowContext.getRegistrationById(userFlowId) != null) {
+      flowContext.remove(userFlowId);
+      log.debug("Предыдущая подписка с id={} найдена и удалена.", userFlowId);
+    }
+    // Задаем участок конвейера...
+    StandardIntegrationFlow userFlow =
+        from(BROADCAST_CHANNEL)
+            .filter(Event.class, event -> event.getType().compareTo(level) >= 0)
+            .enrichHeaders(singletonMap(USER_ID_HEADER, userId))
+            .log(BroadcastFlowConfig::composeEventLogRecord)
+            .get();
+    // ... и тут же вводим его в эксплуатацию.
+    IntegrationFlowRegistration userFlowRegistration =
+        flowContext.registration(userFlow)
+            .autoStartup(true)
+            .id(userFlowId)
+            .register();
+    log.info("Зарегистрирован подписчик {} с уровнем {} (регистрация {})", userId, level,
+        userFlowRegistration.getId());
+  }
+
   private static String composeEventLogRecord(Message<Event> message) {
-    return String.format("Событие матча: тип=%s, время=%s, комментарий=%s",
-        message.getPayload().getType(), message.getPayload().getFullMinute(), message.getPayload().getText());
+    return String.format("Пользователь %d, cобытие матча: тип=%s, время=%s, комментарий=%s",
+            message.getHeaders().get(USER_ID_HEADER, Integer.class), message.getPayload().getType(),
+            message.getPayload().getFullMinute(), message.getPayload().getText());
   }
 
   /**

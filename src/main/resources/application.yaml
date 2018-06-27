@@ -11,7 +11,7 @@ sportexpress:
   broadcastUri: https://www.sport-express.ru/services/match/football/{matchId}/online/se/?json=1
   schedule:
     - id: 236351
-      date: 27.06.18 07:00 Asia/Novosibirsk
+      date: 27.06.18 12:00 Asia/Novosibirsk
       # date: 21.06.18 18:00 Europe/Moscow
       title: Россия - Египет
 
