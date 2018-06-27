@@ -4,13 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Message;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.toparvion.sample.footbot.model.config.Schedule;
-import ru.toparvion.sample.footbot.telegram.FootBot;
 
 import java.time.ZonedDateTime;
 
@@ -24,7 +19,6 @@ import java.time.ZonedDateTime;
 public class IndexController {
 
   private final Schedule schedule;
-  private final FootBot footBot;
 
   @GetMapping("/")
   public String index() {
@@ -36,12 +30,6 @@ public class IndexController {
   @GetMapping("/schedule")
   public Schedule schedule() {
     return schedule;
-  }
-
-  @GetMapping("/test-bot")
-  public Message testBot(@RequestParam String ping) throws TelegramApiException {
-    log.debug("Получен запрос на отправку сообщения через бота: {}", ping);
-    return footBot.execute(new SendMessage((long) footBot.creatorId(), ping));
   }
 
 }

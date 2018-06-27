@@ -1,26 +1,14 @@
 spring:
   application:
     name: footbot
-  datasource:
-    url: ${JDBC_DATABASE_URL:}
-    initialization-mode: always
-    continue-on-error: true
-  integration:
-    jdbc:
-      initialize-schema: always
-
-telegram:
-  bot:
-    name: ToparvionFootBot
-    token: [taken-from-env]
-    creatorId: 129560882
 
 sportexpress:
   broadcastUri: https://www.sport-express.ru/services/match/football/{matchId}/online/se/?json=1
   schedule:
-    - id: 236355
-      date: 21.06.18 18:00 Europe/Moscow
-      title: Франция - Перу
+    - id: 236351
+      date: 27.06.18 07:00 Asia/Novosibirsk
+      # date: 21.06.18 18:00 Europe/Moscow
+      title: Россия - Египет
 
     - id: 236359
       date: 22.06.18 15:00 Europe/Moscow
@@ -54,8 +42,7 @@ sportexpress:
       title: Польша - Колумбия
 
     - id: 236367
-      #date: 25.06.18 17:00 Europe/Moscow
-      date: 26.06.18 16:00 Asia/Novosibirsk
+      date: 25.06.18 17:00 Europe/Moscow
       title: Уругвай - Россия
     - id: 236370
       date: 25.06.18 21:00 Europe/Moscow
