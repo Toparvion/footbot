@@ -19,7 +19,7 @@ public class UserDao {
 
   @Autowired
   public UserDao(NamedParameterJdbcTemplate jdbcTemplate,
-                 @Value("${spring.h2.console.enabled}") boolean isH2enabled) {
+                 @Value("${spring.h2.console.enabled:false}") boolean isH2enabled) {
     this.jdbcTemplate = jdbcTemplate;
     this.isH2enabled = isH2enabled;
   }
