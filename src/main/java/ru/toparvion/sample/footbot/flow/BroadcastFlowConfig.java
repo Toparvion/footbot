@@ -10,6 +10,7 @@ import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.StandardIntegrationFlow;
 import org.springframework.integration.dsl.context.IntegrationFlowContext;
 import org.springframework.integration.dsl.context.IntegrationFlowRegistration;
+import org.springframework.integration.handler.GenericHandler;
 import org.springframework.integration.handler.MessageProcessor;
 import org.springframework.integration.handler.advice.IdempotentReceiverInterceptor;
 import org.springframework.integration.jdbc.metadata.JdbcMetadataStore;
@@ -26,6 +27,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.springframework.integration.dsl.IntegrationFlows.from;
 import static org.springframework.integration.dsl.Pollers.fixedDelay;
 import static org.springframework.integration.dsl.channel.MessageChannels.publishSubscribe;
+import static org.springframework.integration.handler.LoggingHandler.Level.TRACE;
 import static org.springframework.util.StringUtils.hasText;
 import static ru.toparvion.sample.footbot.model.sportexpress.event.Type.text;
 import static ru.toparvion.sample.footbot.util.IntegrationConstants.*;
@@ -46,7 +48,7 @@ public class BroadcastFlowConfig {
   @Bean
   public IntegrationFlow broadcastFlow(MatchEventsProvider matchEventsProvider,
                                        IdempotentReceiverInterceptor antiDuplicateSubFilter) {
-    return from(matchEventsProvider, spec -> spec.poller(fixedDelay(15, SECONDS, 30)))
+    return from(matchEventsProvider, spec -> spec.poller(fixedDelay(15, SECONDS, 60)))
           .split()
           .filter(Event.class, event -> !(event.getType() == text && !hasText(event.getText())),
                   spec -> spec.advice(antiDuplicateSubFilter))
@@ -57,7 +59,7 @@ public class BroadcastFlowConfig {
   /**
    * Пользовательская часть конвейера (множественная)
    */
-  public void startUserFlow(int userId, Type level) {
+  public void startUserFlow(int userId, Type level, GenericHandler<Event> sendingCallback) {
     String userFlowId = USER_FLOW_PREFIX + userId;
     if (flowContext.getRegistrationById(userFlowId) != null) {
       flowContext.remove(userFlowId);
@@ -69,6 +71,8 @@ public class BroadcastFlowConfig {
             .filter(Event.class, event -> event.getType().compareTo(level) >= 0)
             .enrichHeaders(singletonMap(USER_ID_HEADER, userId))
             .log(BroadcastFlowConfig::composeEventLogRecord)
+            .handle(Event.class, sendingCallback)
+            .log(TRACE, this::saveMessageId)
             .get();
     // ... и тут же вводим его в эксплуатацию.
     IntegrationFlowRegistration userFlowRegistration =
@@ -81,9 +85,15 @@ public class BroadcastFlowConfig {
   }
 
   private static String composeEventLogRecord(Message<Event> message) {
-    return String.format("Пользователь %d, cобытие матча: тип=%s, время=%s, комментарий=%s",
+    return String.format("Пользователь %d, событие матча: тип=%s, время=%s, комментарий=%s",
             message.getHeaders().get(USER_ID_HEADER, Integer.class), message.getPayload().getType(),
             message.getPayload().getFullMinute(), message.getPayload().getText());
+  }
+
+  private String saveMessageId(Message<Integer> message) {
+    // TODO пока просто логируем
+    return String.format("Сообщение с id=%s отправлено пользователю %s", message.getPayload(),
+        message.getHeaders().get(USER_ID_HEADER));
   }
 
   /**
