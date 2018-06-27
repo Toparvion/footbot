@@ -1,6 +1,11 @@
 spring:
   application:
     name: footbot
+  datasource:
+    url: ${JDBC_DATABASE_URL:}
+  integration:
+    jdbc:
+      initialize-schema: always
 
 sportexpress:
   broadcastUri: https://www.sport-express.ru/services/match/football/{matchId}/online/se/?json=1
