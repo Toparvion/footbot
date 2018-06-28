@@ -75,6 +75,13 @@ sportexpress:
       date: 27.06.18 21:00 Europe/Moscow
       title: Сербия - Бразилия
 
+    - id: 236382
+      date: 28.06.18 17:00 Europe/Moscow
+      title: Сенегал - Колумбия
+    - id: 236379
+      date: 28.06.18 21:00 Europe/Moscow
+      title: Англия - Бельгия
+
 logging:
   level:
     org.springframework.integration: INFO
