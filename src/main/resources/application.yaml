@@ -82,6 +82,13 @@ sportexpress:
       date: 28.06.18 21:00 Europe/Moscow
       title: Англия - Бельгия
 
+    - id: 236384
+      date: 30.06.18 17:00 Europe/Moscow
+      title: Франция - Аргентина
+    - id: 236383
+      date: 30.06.18 21:00 Europe/Moscow
+      title: Уругвай - Португалия
+
 logging:
   level:
     org.springframework.integration: INFO
