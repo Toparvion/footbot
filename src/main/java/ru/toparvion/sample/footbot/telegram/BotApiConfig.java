@@ -17,11 +17,8 @@ import static org.springframework.util.StringUtils.hasText;
 public class BotApiConfig {
 
   @Bean
-  public FootBot createFootBot(@Value("${telegram.bot.name}") String botUserName,
-                               @Value("${telegram.bot.token}") String botToken,
-                               @Value("${telegram.bot.creatorId}") int botCreatorId,
-                               @Value("${telegram.bot.proxy.host:}") String proxyHost,
-                               @Value("${telegram.bot.proxy.port:3128}") int proxyPort) {
+  public DefaultBotOptions prepareBotOptions(@Value("${telegram.bot.proxy.host:}") String proxyHost,
+                                             @Value("${telegram.bot.proxy.port:3128}") int proxyPort) {
     ApiContextInitializer.init();
     // Set up Http proxy
     DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
@@ -34,7 +31,7 @@ public class BotApiConfig {
       botOptions.setRequestConfig(requestConfig);
       botOptions.setHttpProxy(httpHost);
     }
-    return new FootBot(botUserName, botToken, botCreatorId, botOptions);
+    return botOptions;
   }
 
 }
