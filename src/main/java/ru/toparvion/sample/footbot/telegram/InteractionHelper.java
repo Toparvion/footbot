@@ -46,11 +46,14 @@ public class InteractionHelper implements InitializingBean {
 
     InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
     List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
-    Type[] values = Type.values();
-    for (int i = values.length-1; i >= 0; i--) {
-      Type type = values[i];
+    Type[] types = Type.values();
+    for (int i = types.length-1; i >= 0; i--) {
+      Type type = types[i];
       InlineKeyboardButton button = new InlineKeyboardButton();
       String buttonText = EmojiParser.parseToUnicode(textProps.getProperty("level." + type.name(), type.name()));
+      if ((i <= (types.length - 3)) && (i >= 1)) {
+        buttonText = "и " + buttonText;
+      }
       button.setText(buttonText);
       button.setCallbackData(type.name());
       buttons.add(singletonList(button));
@@ -63,7 +66,7 @@ public class InteractionHelper implements InitializingBean {
     String answerText;
     switch (selectedLevel) {
       case text:
-        answerText = String.format("%s\n- %s\n%s",
+        answerText = String.format("%s\n%s\n\n%s",
             textProps.getProperty("subscription.activated.prefix"),
             textProps.getProperty("level." + selectedLevel.name()),
             textProps.getProperty("subscription.activated.suffix"));
@@ -73,11 +76,14 @@ public class InteractionHelper implements InitializingBean {
         break;
       default:
         StringBuilder levels = new StringBuilder();
-        for (int i = selectedLevel.ordinal(); i <= Type.values().length-2; i++) {
-          String level = Type.values()[i].name();
+        Type[] types = Type.values();
+        for (int i = types.length-2; i >= selectedLevel.ordinal(); i--) {
+          String level = types[i].name();
           String levelText = textProps.getProperty("level." + level);
-          levels.append("- ")
-                .append(levelText)
+          if (i != types.length-2) {
+            levels.append("и ");
+          }
+          levels.append(levelText)
                 .append('\n');
         }
         answerText = String.format("%s\n%s\n%s",
@@ -95,14 +101,19 @@ public class InteractionHelper implements InitializingBean {
     }
     switch (event.getType()) {
       case text:
-        sb.append(convertEmojies(event.getText()));
+        if (event.isDangerous()) {
+          sb.append(":heavy_exclamation_mark: ");
+        }
+        sb.append(event.getText());
         break;
       case change:
-        sb.append(String.format("Замена (%s): %s -> %s", event.getCommand().getName(),
-            event.getPlayerOut().getName(), event.getPlayerIn().getName()));
+        sb.append(":repeat: ")
+          .append(String.format("Замена (%s):\n:arrow_down_small: %s\n:arrow_up_small: %s",
+              event.getCommand().getName(), event.getPlayerOut().getName(), event.getPlayerIn().getName()));
         break;
       case statechange:
-        sb.append(event.getChangedStateName());
+        sb.append(":stopwatch: ")
+          .append(event.getChangedStateName());
         if ("1".equals(event.getChangedStateId())) {      // 1 - end of match
           String score = (String) metaData.get(CURRENT_MATCH_SCORE_HEADER);
           if (hasText(score)) {
@@ -111,10 +122,12 @@ public class InteractionHelper implements InitializingBean {
         }
         break;
       case goal:
-        sb.append(String.format("%s\n(автор гола: %s (%s), текущий счёт: %s)", convertEmojies(event.getText()),
+        sb.append(":soccer: ")
+          .append(String.format("%s\n(автор гола: %s (%s), текущий счёт: %s)", event.getText(),
             event.getPlayer().getName(), event.getCommand().getName(), event.getInfo().getScore()));
         break;
       case card:
+        sb.append(":warning: ");
         switch (event.getKind()) {
           case yellow:
             sb.append("Жёлтая");
@@ -133,9 +146,9 @@ public class InteractionHelper implements InitializingBean {
             .append(")");
         break;
       default:
-        sb.append(convertEmojies(nvls(event.getText(), "")));
+        sb.append(nvls(event.getText(), ""));
     }
-    return sb.toString();
+    return convertEmojies(sb.toString());
   }
 
   String composeUserName(User user) {

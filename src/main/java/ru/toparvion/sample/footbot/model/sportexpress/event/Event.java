@@ -14,6 +14,7 @@ public class Event {
   String text;
   String changedStateName;
   String changedStateId;
+  String dangerous;
 
   Player player;
   Command command;
@@ -21,4 +22,8 @@ public class Event {
 
   Player playerIn;
   Player playerOut;
+
+  public boolean isDangerous() {
+    return dangerous != null && !dangerous.isEmpty();
+  }
 }
