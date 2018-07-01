@@ -89,6 +89,13 @@ sportexpress:
       date: 30.06.18 21:00 Europe/Moscow
       title: Уругвай - Португалия
 
+    - id: 236385
+      date: 01.07.18 17:00 Europe/Moscow
+      title: Испания - Россия
+    - id: 236386
+      date: 01.07.18 21:00 Europe/Moscow
+      title: Хорватия - Дания
+
 logging:
   level:
     org.springframework.integration: INFO
