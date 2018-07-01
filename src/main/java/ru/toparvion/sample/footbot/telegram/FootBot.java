@@ -93,14 +93,15 @@ public class FootBot extends AbilityBot {
     return Ability
             .builder()
             .name("start")
-            .info("Подписаться на события мундиаля")
+            .info("Настроить получение оповещений")
             .locality(USER)
             .privacy(PUBLIC)
             .action(this::listLevels)
             .build();
   }
 
-  @SuppressWarnings("unused")public Reply reactOnSelectReply() {
+  @SuppressWarnings("unused")
+  public Reply reactOnSelectReply() {
     return Reply.of(this::registerUser, Flag.CALLBACK_QUERY);
   }
 

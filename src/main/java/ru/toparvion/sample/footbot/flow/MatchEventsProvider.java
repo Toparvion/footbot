@@ -26,7 +26,7 @@ import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATC
 @Slf4j
 public class MatchEventsProvider implements MessageSource<List<Event>> {
   private static final int beforeStartGapMinutes = 25;
-  private static final int afterStartGapMinutes = 130;
+  private static final int afterStartGapMinutes = 160;
 
   private final Schedule schedule;
   private final String infoSourceUri;
