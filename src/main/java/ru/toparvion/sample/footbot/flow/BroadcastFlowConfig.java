@@ -29,7 +29,7 @@ import static org.springframework.integration.dsl.Pollers.fixedDelay;
 import static org.springframework.integration.dsl.channel.MessageChannels.publishSubscribe;
 import static org.springframework.integration.handler.LoggingHandler.Level.TRACE;
 import static org.springframework.util.StringUtils.hasText;
-import static ru.toparvion.sample.footbot.model.sportexpress.event.Type.text;
+import static ru.toparvion.sample.footbot.model.sportexpress.event.Type.*;
 import static ru.toparvion.sample.footbot.util.IntegrationConstants.*;
 
 /**
@@ -68,7 +68,7 @@ public class BroadcastFlowConfig {
     // Задаем участок конвейера...
     StandardIntegrationFlow userFlow =
         from(BROADCAST_CHANNEL)
-            .filter(Event.class, event -> event.getType().compareTo(level) >= 0)
+            .filter(Event.class, event -> filterRelevantEvent(event, level))
             .enrichHeaders(singletonMap(USER_ID_HEADER, userId))
             .log(BroadcastFlowConfig::composeEventLogRecord)
             .handle(Event.class, sendingCallback)
@@ -82,6 +82,15 @@ public class BroadcastFlowConfig {
             .register();
     log.info("Зарегистрирован подписчик {} с уровнем {} (регистрация {})", userId, level,
         userFlowRegistration.getId());
+  }
+
+  private boolean filterRelevantEvent(Event event, Type userLevel) {
+    Type eventLevel = event.getType();
+    if (eventLevel.compareTo(none) > 0) {
+      // every penalty event is considered equal to a goal
+      eventLevel = goal;
+    }
+    return eventLevel.compareTo(userLevel) >= 0;
   }
 
   private static String composeEventLogRecord(Message<Event> message) {
