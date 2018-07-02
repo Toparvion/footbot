@@ -6,5 +6,9 @@ public enum Type {
   card,
   statechange,
   goal,
-  none /* artificial */
+  none /* artificial */,
+  // additional, non-selectable types
+  penaltynogoal,
+  penaltyseriegoal,
+  penaltyserienogoal
 }

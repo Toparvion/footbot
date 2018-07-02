@@ -24,6 +24,7 @@ import java.util.Properties;
 
 import static java.util.Collections.singletonList;
 import static org.springframework.util.StringUtils.hasText;
+import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_OVERTIME_SCORE_HEADER;
 import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_SCORE_HEADER;
 import static ru.toparvion.sample.footbot.util.Util.convertEmojies;
 import static ru.toparvion.sample.footbot.util.Util.nvls;
@@ -47,11 +48,12 @@ public class InteractionHelper implements InitializingBean {
     InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
     List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
     Type[] types = Type.values();
-    for (int i = types.length-1; i >= 0; i--) {
+    int startIdx = types.length - 4;
+    for (int i = startIdx; i >= 0; i--) {
       Type type = types[i];
       InlineKeyboardButton button = new InlineKeyboardButton();
       String buttonText = EmojiParser.parseToUnicode(textProps.getProperty("level." + type.name(), type.name()));
-      if ((i <= (types.length - 3)) && (i >= 1)) {
+      if ((i <= (types.length - 6)) && (i >= 1)) {
         buttonText = "и " + buttonText;
       }
       button.setText(buttonText);
@@ -77,10 +79,11 @@ public class InteractionHelper implements InitializingBean {
       default:
         StringBuilder levels = new StringBuilder();
         Type[] types = Type.values();
-        for (int i = types.length-2; i >= selectedLevel.ordinal(); i--) {
+        int startIdx = types.length - 5;    // to account two penalty types and artificial type 'none'
+        for (int i = startIdx; i >= selectedLevel.ordinal(); i--) {
           String level = types[i].name();
           String levelText = textProps.getProperty("level." + level);
-          if (i != types.length-2) {
+          if (i != startIdx) {
             levels.append("и ");
           }
           levels.append(levelText)
@@ -119,12 +122,22 @@ public class InteractionHelper implements InitializingBean {
           if (hasText(score)) {
             sb.append(". Счёт ").append(score);
           }
+          String overtimeScore = (String) metaData.get(CURRENT_MATCH_OVERTIME_SCORE_HEADER);
+          if (hasText(overtimeScore)) {
+            sb.append(' ').append(overtimeScore);
+          }
         }
         break;
       case goal:
+      case penaltyseriegoal:
         sb.append(":soccer: ")
           .append(String.format("%s\n(автор гола: %s (%s), текущий счёт: %s)", event.getText(),
             event.getPlayer().getName(), event.getCommand().getName(), event.getInfo().getScore()));
+        break;
+      case penaltyserienogoal:
+      case penaltynogoal:
+        sb.append(":no_entry_sign: ")
+          .append(event.getText());
         break;
       case card:
         sb.append(":warning: ");

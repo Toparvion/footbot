@@ -48,7 +48,7 @@ public class BroadcastFlowConfig {
   @Bean
   public IntegrationFlow broadcastFlow(MatchEventsProvider matchEventsProvider,
                                        IdempotentReceiverInterceptor antiDuplicateSubFilter) {
-    return from(matchEventsProvider, spec -> spec.poller(fixedDelay(30, SECONDS, 10)))
+    return from(matchEventsProvider, spec -> spec.poller(fixedDelay(30, SECONDS, 20)))
           .split()
           .filter(Event.class, event -> !(event.getType() == text && !hasText(event.getText())),
                   spec -> spec.advice(antiDuplicateSubFilter))

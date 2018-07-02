@@ -96,6 +96,13 @@ sportexpress:
       date: 01.07.18 21:00 Europe/Moscow
       title: Хорватия - Дания
 
+    - id: 236387
+      date: 02.07.18 17:00 Europe/Moscow
+      title: Бразилия - Мексика
+    - id: 236388
+      date: 02.07.18 21:00 Europe/Moscow
+      title: Бельгия - Япония
+
 logging:
   level:
     org.springframework.integration: INFO

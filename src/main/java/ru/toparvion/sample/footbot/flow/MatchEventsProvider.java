@@ -17,6 +17,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_OVERTIME_SCORE_HEADER;
 import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_SCORE_HEADER;
 
 /**
@@ -25,8 +26,8 @@ import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATC
 @Service
 @Slf4j
 public class MatchEventsProvider implements MessageSource<List<Event>> {
-  private static final int beforeStartGapMinutes = 25;
-  private static final int afterStartGapMinutes = 190;
+  private static final int beforeStartGapMinutes = 10;
+  private static final int afterStartGapMinutes = 180;
 
   private final Schedule schedule;
   private final String infoSourceUri;
@@ -62,6 +63,7 @@ public class MatchEventsProvider implements MessageSource<List<Event>> {
     return MessageBuilder
             .withPayload(matchEvents)
             .setHeader(CURRENT_MATCH_SCORE_HEADER, actingMatch.getScore())
+            .setHeader(CURRENT_MATCH_OVERTIME_SCORE_HEADER, actingMatch.getOvertimeScore())
             .build();
   }
 

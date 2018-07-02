@@ -10,6 +10,7 @@ public class Match {
   String id;
   String date;
   String score;
+  String overtimeScore;
   String statusName;
 
   Command homeCommand;
