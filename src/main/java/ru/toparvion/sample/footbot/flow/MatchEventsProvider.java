@@ -7,6 +7,7 @@ import org.springframework.integration.core.MessageSource;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 import org.springframework.web.client.RestTemplate;
 import ru.toparvion.sample.footbot.model.config.Schedule;
 import ru.toparvion.sample.footbot.model.config.ScheduledMatch;
@@ -17,8 +18,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_OVERTIME_SCORE_HEADER;
-import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_SCORE_HEADER;
+import static ru.toparvion.sample.footbot.util.IntegrationConstants.*;
 
 /**
  * Источник живых данных о происходящих играх
@@ -52,6 +52,8 @@ public class MatchEventsProvider implements MessageSource<List<Event>> {
     ScheduledMatch scheduledMatch = scheduledMatchOpt.get();
     log.debug("Запрашиваю события активного матча '{}' (id={}, {})", scheduledMatch.getTitle(), scheduledMatch.getId(),
             scheduledMatch.getDate());
+    StopWatch stopWatch = new StopWatch();
+    stopWatch.start();
 
     Match actingMatch = restTemplate.getForObject(infoSourceUri, Match.class, scheduledMatch.getId());
     if (actingMatch == null) {
@@ -59,11 +61,13 @@ public class MatchEventsProvider implements MessageSource<List<Event>> {
       return null;
     }
     List<Event> matchEvents = actingMatch.getEvents();
-    log.debug("Получено {} событий матча.", matchEvents.size());
+    stopWatch.stop();
+    log.debug("Получено {} событий матча за {} мс.", matchEvents.size(), stopWatch.getLastTaskTimeMillis());
     return MessageBuilder
             .withPayload(matchEvents)
             .setHeader(CURRENT_MATCH_SCORE_HEADER, actingMatch.getScore())
             .setHeader(CURRENT_MATCH_OVERTIME_SCORE_HEADER, actingMatch.getOvertimeScore())
+            .setHeader(MATCH_ID_HEADER, actingMatch.getId())
             .build();
   }
 

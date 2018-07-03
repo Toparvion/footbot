@@ -111,13 +111,12 @@ public class BroadcastFlowConfig {
   @Bean
   public IdempotentReceiverInterceptor antiDuplicateSubFilter(JdbcMetadataStore metadataStore) {
     // ключами хранилища считаем хэш всего событий
-    MessageProcessor<String> keyStrategy = message -> Integer.toHexString(message.getPayload().hashCode());
     // значениями - текст или временную метку (просто для удобства)
     MessageProcessor<String> valueStrategy = message -> Util.nvls(
         ((Event) message.getPayload()).getText(),
         requireNonNull(message.getHeaders().getTimestamp()).toString());
     // создаем селектор и перехватчикка
-    MetadataStoreSelector messageSelector = new MetadataStoreSelector(keyStrategy, valueStrategy, metadataStore);
+    MetadataStoreSelector messageSelector = new MetadataStoreSelector(this::composeUniqueEventId, valueStrategy, metadataStore);
     IdempotentReceiverInterceptor interceptor = new IdempotentReceiverInterceptor(messageSelector);
     // дубликаты не задумываясь отправляем на помойку
     interceptor.setDiscardChannel(new NullChannel());
@@ -131,6 +130,13 @@ public class BroadcastFlowConfig {
   @Bean
   public JdbcMetadataStore metadataStore(JdbcTemplate jdbcTemplate) {
     return new JdbcMetadataStore(jdbcTemplate);
+  }
+
+  private String composeUniqueEventId(Message<?> eventMessage) {
+    Event event = (Event) eventMessage.getPayload();
+    String eventId = event.getId();
+    String matchId = eventMessage.getHeaders().get(MATCH_ID_HEADER, String.class);
+    return matchId + '_' + eventId;
   }
 
 }

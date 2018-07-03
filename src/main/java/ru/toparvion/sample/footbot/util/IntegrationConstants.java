@@ -9,6 +9,7 @@ public final class IntegrationConstants {
 
   public static final String CURRENT_MATCH_SCORE_HEADER = "currentScore";
   public static final String CURRENT_MATCH_OVERTIME_SCORE_HEADER = "currentOvertimeScore";
+  public static final String MATCH_ID_HEADER = "matchId";
 
   public static final String BROADCAST_CHANNEL = "broadcastChannel";
 }

@@ -105,6 +105,18 @@ public class FootBot extends AbilityBot {
     return Reply.of(this::registerUser, Flag.CALLBACK_QUERY);
   }
 
+  @SuppressWarnings("unused")
+  public Ability helpAbility() {
+    return Ability
+        .builder()
+        .name("help")
+        .info("справка")
+        .locality(USER)
+        .privacy(PUBLIC)
+        .action(this::sendHelpText)
+        .build();
+  }
+
   private void registerUser(Update update) {
     CallbackQuery callbackQuery = update.getCallbackQuery();
     Type chosenLevel = Type.valueOf(callbackQuery.getData());
@@ -155,6 +167,14 @@ public class FootBot extends AbilityBot {
     helper.composeSelectMarkup(sendMessageCommand);
     silent.execute(sendMessageCommand);
     log.info("Отправлены варианты выбора.");
+  }
+
+  private void sendHelpText(MessageContext ctx) {
+    Long chatId = ctx.chatId();
+    log.debug("Формирую справку для чата {}...", chatId);
+    String helpText = helper.composeHelpText();
+    silent.sendMd(helpText, chatId);
+    log.info("Отправлена справка в чат {}.", chatId);
   }
 
   @EventListener(ApplicationStartedEvent.class)

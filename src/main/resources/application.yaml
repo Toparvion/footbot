@@ -30,7 +30,6 @@ sportexpress:
       date: 22.06.18 18:00 Europe/Moscow
       title: Нигерия - Исландия
     - id: 236360
-#      date: 22.06.18 15:00 Asia/Novosibirsk
       date: 22.06.18 21:00 Europe/Moscow
       title: Сербия - Швейцария
 
@@ -102,6 +101,13 @@ sportexpress:
     - id: 236388
       date: 02.07.18 21:00 Europe/Moscow
       title: Бельгия - Япония
+
+    - id: 236389
+      date: 03.07.18 17:00 Europe/Moscow
+      title: Швеция - Швейцария
+    - id: 236388
+      date: 03.07.18 21:00 Europe/Moscow
+      title: Колумбия - Англия
 
 logging:
   level:

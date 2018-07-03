@@ -164,6 +164,11 @@ public class InteractionHelper implements InitializingBean {
     return convertEmojies(sb.toString());
   }
 
+  String composeHelpText() {
+    String helpText = textProps.getProperty("help.text");
+    return EmojiParser.parseToUnicode(helpText);
+  }
+
   String composeUserName(User user) {
     StringBuilder sb = new StringBuilder(user.getFirstName());
     if (hasText(user.getLastName())) {
