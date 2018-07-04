@@ -106,8 +106,9 @@ sportexpress:
       date: 03.07.18 17:00 Europe/Moscow
       title: Швеция - Швейцария
     - id: 236390
-      date: 04.07.18 07:00 Asia/Novosibirsk
+      date: 03.07.18 21:00 Europe/Moscow
       title: Колумбия - Англия
+
   # date: 21.06.18 18:00 Asia/Novosibirsk
 
 logging:
