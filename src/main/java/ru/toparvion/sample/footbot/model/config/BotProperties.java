@@ -19,4 +19,5 @@ public class BotProperties {
   private String name;
   private String token;
   private int creatorId;
+  private boolean enabled = true;
 }

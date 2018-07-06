@@ -1,0 +1,1477 @@
+{
+  "dao": "LiveSE",
+  "id": "236366",
+  "date": "24.06.2018 18:00",
+  "score": "0 : 1",
+  "isOvertimePlayed": "0",
+  "homeScore": "0",
+  "guestScore": "1",
+  "statusName": "Идет 1-й тайм",
+  "status": "2",
+  "homeCommand": {
+    "id": "584",
+    "name": "Япония",
+    "icon80x80": "https://ss.sport-express.ru/img/football/commands/584_big.png",
+    "link": "//www.sport-express.ru/football/L/command/584/",
+    "seasonsLink": "//www.sport-express.ru/football/L/command/584/seasons/",
+    "color1": "000080",
+    "color2": "",
+    "color3": "",
+    "statistic": {
+      "homePosession": "58",
+      "homeShotgoals": "",
+      "homeShotwides": "",
+      "homeShotgates": "",
+      "homeCorners": "",
+      "homeOffsides": "",
+      "homeFouls": "",
+      "homeRacks": "0"
+    },
+    "trainer": {
+      "id": "2780",
+      "name": "Акира Нисино",
+      "role": "Главный тренер",
+      "originId": "75",
+      "originName": "Япония",
+      "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+      "icon60x60": "https://ss.sport-express.ru/img/football/trainers/2780_small.jpg"
+    },
+    "players": [
+      {
+        "id": "27495",
+        "name": "Эйдзи Кавасима",
+        "shortName": "Кавасима",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/27495/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/27495_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "1",
+          "roleGroupName": "Вратарь",
+          "roleGroupType": "goalkeeper",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "1",
+              "idRole": "1"
+            }
+          ]
+        }
+      },
+      {
+        "id": "33717",
+        "name": "Хироки Сакаи",
+        "shortName": "Х.Сакаи",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/33717/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/33717_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "19",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "2",
+              "idRole": "3"
+            }
+          ]
+        }
+      },
+      {
+        "id": "50751",
+        "name": "Ген Седзи",
+        "shortName": "Седзи",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/50751/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/50751_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "3",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "5",
+              "idRole": "5"
+            }
+          ]
+        }
+      },
+      {
+        "id": "30997",
+        "name": "Мая Йосида",
+        "shortName": "Йосида",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/30997/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/30997_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "22",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "3",
+              "idRole": "5"
+            }
+          ]
+        }
+      },
+      {
+        "id": "24472",
+        "name": "Юто Нагатомо",
+        "shortName": "Нагатомо",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/24472/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/24472_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "5",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "6",
+              "idRole": "4"
+            }
+          ]
+        }
+      },
+      {
+        "id": "45436",
+        "name": "Генки Харагути",
+        "shortName": "Харагути",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/45436/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/45436_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "8",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "10",
+              "idRole": "6"
+            }
+          ]
+        }
+      },
+      {
+        "id": "46724",
+        "name": "Гаку Сибасаки",
+        "shortName": "Сибасаки",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/46724/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/46724_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "7",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "9",
+              "idRole": "12"
+            }
+          ]
+        }
+      },
+      {
+        "id": "19613",
+        "name": "Макото Хасебе",
+        "shortName": "Хасебе",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/19613/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/19613_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "17",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "7",
+              "idRole": "12"
+            }
+          ]
+        }
+      },
+      {
+        "id": "23593",
+        "name": "Синдзи Кагава",
+        "shortName": "Кагава",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/23593/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/23593_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "10",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "12",
+              "idRole": "8"
+            }
+          ]
+        }
+      },
+      {
+        "id": "34960",
+        "name": "Такаси Инуи",
+        "shortName": "Инуи",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/34960/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/34960_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "14",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "14",
+              "idRole": "7"
+            }
+          ]
+        }
+      },
+      {
+        "id": "39502",
+        "name": "Юя Осако",
+        "shortName": "Осако",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/39502/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/39502_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "15",
+          "roleGroupName": "Нападающий",
+          "roleGroupType": "forward",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "20",
+              "idRole": "10"
+            }
+          ]
+        }
+      }
+    ],
+    "reservePlayers": [
+      {
+        "id": "56057",
+        "name": "Масааки Хигасигути",
+        "shortName": "Хигасигути",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/56057/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/56057_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "12",
+          "roleGroupName": "Вратарь",
+          "roleGroupType": "goalkeeper",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "51536",
+        "name": "Косукэ Накамура",
+        "shortName": "Накамура",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/51536/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/51536_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "23",
+          "roleGroupName": "Вратарь",
+          "roleGroupType": "goalkeeper",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "51541",
+        "name": "Наомити Уэда",
+        "shortName": "Уэда",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/51541/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/51541_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "2",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "51545",
+        "name": "Ватару Эндо",
+        "shortName": "Эндо",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/51545/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/51545_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "6",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "27506",
+        "name": "Томоаки Макино",
+        "shortName": "Макино",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/27506/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/27506_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "20",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "32942",
+        "name": "Готоку Сакаи",
+        "shortName": "Г.Сакаи",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/32942/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/32942_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "21",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "20007",
+        "name": "Кейсуке Хонда",
+        "shortName": "Хонда",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/20007/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/20007_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "4",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "31121",
+        "name": "Такаси Усами",
+        "shortName": "Усами",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/31121/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/31121_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "11",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "33979",
+        "name": "Хотару Ямагути",
+        "shortName": "Ямагути",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/33979/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/33979_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "16",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "51547",
+        "name": "Рета Осима",
+        "shortName": "Осима",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/51547/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/51547_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "18",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "23592",
+        "name": "Синдзи Окадзаки",
+        "shortName": "Окадзаки",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/23592/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/23592_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "9",
+          "roleGroupName": "Нападающий",
+          "roleGroupType": "forward",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "46382",
+        "name": "Йосинори Муто",
+        "shortName": "Муто",
+        "originId": "75",
+        "originName": "Япония",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/75_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/46382/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/46382_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "13",
+          "roleGroupName": "Нападающий",
+          "roleGroupType": "forward",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      }
+    ]
+  },
+  "guestCommand": {
+    "id": "634",
+    "name": "Сенегал",
+    "icon80x80": "https://ss.sport-express.ru/img/football/commands/634_big.png",
+    "link": "//www.sport-express.ru/football/L/command/634/",
+    "seasonsLink": "//www.sport-express.ru/football/L/command/634/seasons/",
+    "color1": "FFFFFF",
+    "color2": "",
+    "color3": "",
+    "statistic": {
+      "guestPosession": "42",
+      "guestShotgoals": "",
+      "guestShotwides": "1",
+      "guestShotgates": "",
+      "guestCorners": "2",
+      "guestOffsides": "",
+      "guestFouls": "3",
+      "guestRacks": "0"
+    },
+    "trainer": {
+      "id": "2441",
+      "name": "Алиу Сиссе",
+      "role": "Главный тренер",
+      "originId": "12",
+      "originName": "Сенегал",
+      "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+      "icon60x60": "https://ss.sport-express.ru/img/football/trainers/2441_small.jpg"
+    },
+    "players": [
+      {
+        "id": "52635",
+        "name": "Кадим Н`Диай",
+        "shortName": "К.Н`Диай",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/52635/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/52635_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "16",
+          "roleGroupName": "Вратарь",
+          "roleGroupType": "goalkeeper",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "1",
+              "idRole": "1"
+            }
+          ]
+        }
+      },
+      {
+        "id": "38224",
+        "name": "Юссуф Сабали",
+        "shortName": "Сабали",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "51",
+        "secondaryOriginName": "Франция",
+        "secondaryOriginFlag50x50": "https://ss.sport-express.ru/img/flags/v2/51_medium.png",
+        "profileLink": "//www.sport-express.ru/football/L/player/38224/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/38224_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "12",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "2",
+              "idRole": "3"
+            }
+          ]
+        }
+      },
+      {
+        "id": "35246",
+        "name": "Калиду Кулибали",
+        "shortName": "К-ду.Кулибали",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "51",
+        "secondaryOriginName": "Франция",
+        "secondaryOriginFlag50x50": "https://ss.sport-express.ru/img/flags/v2/51_medium.png",
+        "profileLink": "//www.sport-express.ru/football/L/player/35246/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/35246_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "3",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "3",
+              "idRole": "5"
+            }
+          ]
+        }
+      },
+      {
+        "id": "29214",
+        "name": "Салиф Сане",
+        "shortName": "Сане",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "51",
+        "secondaryOriginName": "Франция",
+        "secondaryOriginFlag50x50": "https://ss.sport-express.ru/img/flags/v2/51_medium.png",
+        "profileLink": "//www.sport-express.ru/football/L/player/29214/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/29214_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "6",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "5",
+              "idRole": "5"
+            }
+          ]
+        }
+      },
+      {
+        "id": "56112",
+        "name": "Мусса Ваге",
+        "shortName": "Ваге",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/56112/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/56112_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "22",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "6",
+              "idRole": "4"
+            }
+          ]
+        }
+      },
+      {
+        "id": "51764",
+        "name": "Баду Н`Диай",
+        "shortName": "Б.Н`Диай",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/51764/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/51764_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "17",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "10",
+              "idRole": "6"
+            }
+          ]
+        }
+      },
+      {
+        "id": "19798",
+        "name": "Альфред Н`Диай",
+        "shortName": "А.Н`Диай",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "51",
+        "secondaryOriginName": "Франция",
+        "secondaryOriginFlag50x50": "https://ss.sport-express.ru/img/flags/v2/51_medium.png",
+        "profileLink": "//www.sport-express.ru/football/L/player/19798/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/19798_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "13",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "12",
+              "idRole": "8"
+            }
+          ]
+        }
+      },
+      {
+        "id": "28176",
+        "name": "Идрисса Гей",
+        "shortName": "Гей",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/28176/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/28176_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "5",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "14",
+              "idRole": "7"
+            }
+          ]
+        }
+      },
+      {
+        "id": "51672",
+        "name": "Исмаила Сарр",
+        "shortName": "Сарр",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/51672/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/51672_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "18",
+          "roleGroupName": "Нападающий",
+          "roleGroupType": "forward",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "18",
+              "idRole": "11"
+            }
+          ]
+        }
+      },
+      {
+        "id": "30456",
+        "name": "М`Бай Ньянг",
+        "shortName": "Ньянг",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "51",
+        "secondaryOriginName": "Франция",
+        "secondaryOriginFlag50x50": "https://ss.sport-express.ru/img/flags/v2/51_medium.png",
+        "profileLink": "//www.sport-express.ru/football/L/player/30456/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/30456_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "19",
+          "roleGroupName": "Нападающий",
+          "roleGroupType": "forward",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "20",
+              "idRole": "10"
+            }
+          ]
+        }
+      },
+      {
+        "id": "34082",
+        "name": "Садио Мане",
+        "shortName": "Мане",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/34082/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/34082_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "10",
+          "roleGroupName": "Нападающий",
+          "roleGroupType": "forward",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0",
+          "positions": [
+            {
+              "fullMinute": "0",
+              "idEvent": "0",
+              "idPosition": "22",
+              "idRole": "13"
+            }
+          ]
+        }
+      }
+    ],
+    "reservePlayers": [
+      {
+        "id": "26364",
+        "name": "Абдулайе Диалло",
+        "shortName": "Диалло",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "51",
+        "secondaryOriginName": "Франция",
+        "secondaryOriginFlag50x50": "https://ss.sport-express.ru/img/flags/v2/51_medium.png",
+        "profileLink": "//www.sport-express.ru/football/L/player/26364/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/26364_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "1",
+          "roleGroupName": "Вратарь",
+          "roleGroupType": "goalkeeper",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "34970",
+        "name": "Альфред Гомис",
+        "shortName": "Гомис",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "3",
+        "secondaryOriginName": "Италия",
+        "secondaryOriginFlag50x50": "https://ss.sport-express.ru/img/flags/v2/3_medium.png",
+        "profileLink": "//www.sport-express.ru/football/L/player/34970/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/34970_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "23",
+          "roleGroupName": "Вратарь",
+          "roleGroupType": "goalkeeper",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "54731",
+        "name": "Адама Мбенг",
+        "shortName": "Мбенг",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/54731/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/54731_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "2",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "34080",
+        "name": "Серинь Мбодж",
+        "shortName": "Мбодж",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/34080/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/34080_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "4",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "22108",
+        "name": "Ламин Гассама",
+        "shortName": "Гассама",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "51",
+        "secondaryOriginName": "Франция",
+        "secondaryOriginFlag50x50": "https://ss.sport-express.ru/img/flags/v2/51_medium.png",
+        "profileLink": "//www.sport-express.ru/football/L/player/22108/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/22108_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "21",
+          "roleGroupName": "Защитник",
+          "roleGroupType": "defender",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "23333",
+        "name": "Шейку Куяте",
+        "shortName": "Куяте",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "61",
+        "secondaryOriginName": "Бельгия",
+        "secondaryOriginFlag50x50": "https://ss.sport-express.ru/img/flags/v2/61_medium.png",
+        "profileLink": "//www.sport-express.ru/football/L/player/23333/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/23333_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "8",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "45076",
+        "name": "Шейк Ндой",
+        "shortName": "Ндой",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/45076/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/45076_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "11",
+          "roleGroupName": "Полузащитник",
+          "roleGroupType": "halfback",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "3217",
+        "name": "Мусса Со",
+        "shortName": "Со",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "51",
+        "secondaryOriginName": "Франция",
+        "secondaryOriginFlag50x50": "https://ss.sport-express.ru/img/flags/v2/51_medium.png",
+        "profileLink": "//www.sport-express.ru/football/L/player/3217/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/3217_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "7",
+          "roleGroupName": "Нападающий",
+          "roleGroupType": "forward",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "25012",
+        "name": "Маме Бирам Диуф",
+        "shortName": "Диуф",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/25012/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/25012_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "9",
+          "roleGroupName": "Нападающий",
+          "roleGroupType": "forward",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "31453",
+        "name": "Мусса Конате",
+        "shortName": "Конате",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/31453/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/31453_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "14",
+          "roleGroupName": "Нападающий",
+          "roleGroupType": "forward",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "45920",
+        "name": "Диафра Сако",
+        "shortName": "Сако",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "51",
+        "secondaryOriginName": "Франция",
+        "secondaryOriginFlag50x50": "https://ss.sport-express.ru/img/flags/v2/51_medium.png",
+        "profileLink": "//www.sport-express.ru/football/L/player/45920/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/45920_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "15",
+          "roleGroupName": "Нападающий",
+          "roleGroupType": "forward",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      },
+      {
+        "id": "38565",
+        "name": "Кейта Бальде",
+        "shortName": "Б.Кейта",
+        "originId": "12",
+        "originName": "Сенегал",
+        "originFlag50x50": "https://ss.sport-express.ru/img/flags/v2/12_medium.png",
+        "secondaryOriginId": "",
+        "secondaryOriginName": "",
+        "secondaryOriginFlag50x50": "",
+        "profileLink": "//www.sport-express.ru/football/L/player/38565/",
+        "icon60x60": "https://ss.sport-express.ru/img/football/players/38565_medium.jpg",
+        "info": {
+          "fromFullMinute": "",
+          "number": "20",
+          "roleGroupName": "Нападающий",
+          "roleGroupType": "forward",
+          "seEstimation": "",
+          "orderChange": "0",
+          "isChanged": "0",
+          "isCaptain": "0",
+          "type": "0",
+          "questionable": "0"
+        }
+      }
+    ]
+  },
+  "homePenaltyScore": "0",
+  "guestPenaltyScore": "0",
+  "fullCurrentMinute": "11’",
+  "currentMinute": "11",
+  "addCurrentMinute": "0",
+  "isPenaltyPlayed": "",
+  "overtimeScore": "",
+  "hasTextEvents": "1",
+  "techResult": "0",
+  "result": "0",
+  "link": "https://www.sport-express.ru/football/world/chempionat-mira-2018/fbl_match-yaponiya-senegal-236366/",
+  "mobileLink": "https://m.sport-express.ru/football/world/chempionat-mira-2018/fbl_match-yaponiya-senegal-236366/",
+  "isSocketNeeded": 1,
+  "socNet": [
+    {
+      "id": "3995",
+      "datetime": "17:33 24 июня 2018",
+      "title": "Полчаса до матча",
+      "code": "<blockquote class=\"twitter-tweet\" data-lang=\"ru\"><p lang=\"ja\" dir=\"ltr\">???????????????????<br>?????????30??<a href=\"https://twitter.com/hashtag/worldcup?src=hash&amp;ref_src=twsrc%5Etfw\">#worldcup</a>? ?<a href=\"https://twitter.com/hashtag/SAMURAIBLUE?src=hash&amp;ref_src=twsrc%5Etfw\">#SAMURAIBLUE</a>? ? <a href=\"https://twitter.com/hashtag/JPN?src=hash&amp;ref_src=twsrc%5Etfw\">#JPN</a>? ?<a href=\"https://twitter.com/hashtag/%EF%BC%AA%E3%83%AA%E3%83%BC%E3%82%B0?src=hash&amp;ref_src=twsrc%5Etfw\">#????</a> <a href=\"https://t.co/V2ECDEo0gE\">pic.twitter.com/V2ECDEo0gE</a></p>&mdash; ???? (@J_League) <a href=\"https://twitter.com/J_League/status/1010893631698243584?ref_src=twsrc%5Etfw\">24 июня 2018 г.</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>",
+      "link": ""
+    },
+    {
+      "id": "3996",
+      "datetime": "17:04 24 июня 2018",
+      "title": "Состав",
+      "code": "<blockquote class=\"twitter-tweet\" data-lang=\"ru\"><p lang=\"ja\" dir=\"ltr\"><a href=\"https://twitter.com/hashtag/SAMURAIBLUE?src=hash&amp;ref_src=twsrc%5Etfw\">#SAMURAIBLUE</a><br>STARTING LINEUP<br>GK???DF??????????????MF??????????????FW??<br>2018FIFA?????????? <a href=\"https://twitter.com/hashtag/JPN?src=hash&amp;ref_src=twsrc%5Etfw\">#JPN</a> vs <a href=\"https://twitter.com/hashtag/SEN?src=hash&amp;ref_src=twsrc%5Etfw\">#SEN</a> <br>6/24(?)24? Kickoff??<br>??TV???NHK BS1??????<a href=\"https://twitter.com/hashtag/jfa?src=hash&amp;ref_src=twsrc%5Etfw\">#jfa</a> <a href=\"https://twitter.com/hashtag/daihyo?src=hash&amp;ref_src=twsrc%5Etfw\">#daihyo</a> <a href=\"https://twitter.com/hashtag/Worldcup?src=hash&amp;ref_src=twsrc%5Etfw\">#Worldcup</a> <a href=\"https://twitter.com/hashtag/%E5%A4%A2%E3%82%92%E5%8A%9B%E3%81%AB2018?src=hash&amp;ref_src=twsrc%5Etfw\">#????2018</a> <a href=\"https://t.co/n9MhzbqMM9\">pic.twitter.com/n9MhzbqMM9</a></p>&mdash; ???????? (@jfa_samuraiblue) <a href=\"https://twitter.com/jfa_samuraiblue/status/1010886258510319616?ref_src=twsrc%5Etfw\">24 июня 2018 г.</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>",
+      "link": ""
+    }
+  ],
+  "beautyDate": "24 июня 2018",
+  "time": "18:00",
+  "timestamp": 1529852400,
+  "stadium": {
+    "id": "783",
+    "name": "Екатеринбург Арена",
+    "originName": "Россия",
+    "subOriginName": "Екатеринбург",
+    "lastAuditory": "33061"
+  },
+  "title": "Футбол. Япония - Сенегал. 24 июня 2018. Чемпионат мира 2018",
+  "imageLink": "https://ss.sport-express.ru/userfiles/materials/sharing/matchcenter_football/23/236366.jpg",
+  "bookies": {
+    "odds1": "3.05",
+    "oddsX": "3.00",
+    "odds2": "2.55",
+    "link": "https://www.fonbet.ru/#!/bets/football/11652",
+    "linkMobile": "https://www.fonbet.ru/mobile/bets/football/11652"
+  },
+  "description": "<p>\"СЭ\" рад приветствовать всех любителей футбола!</p><p>Здесь вас ждет онлайн-трансляция матча Япония  – Сенегал .</p><p>Чемпионат мира, Группа H.</p><p>Матч пройдет 24 июня 2018 года на стадионе Екатеринбург Арена (Екатеринбург, Россия). Начало - в 18:00 по московскому времени.</p>",
+  "events": [
+    {
+      "id": "cf1e07a5e4becc0648d87e264ed025d1",
+      "type": "text",
+      "fullMinute": "87’",
+      "minute": "87",
+      "addMinute": "0",
+      "text": "Фертонген бьет из-за пределов штрафной в ближний - Кавасима не ожидал и с трудом вытаскивает мяч!",
+      "link": "",
+      "dangerous": "1"
+    },
+    {
+      "id": "bac5f6de14f0d2c878cf059638794cc8",
+      "type": "text",
+      "fullMinute": "0’",
+      "minute": "0",
+      "addMinute": "0",
+      "text": "И снова всем привет! Текущее время: ${now}",
+      "link": "",
+      "dangerous": ""
+    }
+  ],
+  "overtimePenaltyLabel": "",
+  "video": [],
+  "requestDate": "24.06.2018 18:12"
+}

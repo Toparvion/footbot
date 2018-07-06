@@ -1,5 +1,6 @@
 package ru.toparvion.sample.footbot.telegram;
 
+import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
@@ -35,10 +36,10 @@ import java.util.List;
 import java.util.Map;
 
 import static java.lang.String.format;
-import static java.lang.String.valueOf;
+import static org.springframework.integration.support.MessageBuilder.withPayload;
 import static org.telegram.abilitybots.api.objects.Locality.USER;
 import static org.telegram.abilitybots.api.objects.Privacy.PUBLIC;
-import static ru.toparvion.sample.footbot.util.IntegrationConstants.USER_ID_HEADER;
+import static ru.toparvion.sample.footbot.util.IntegrationConstants.*;
 
 @Slf4j
 @Service
@@ -66,26 +67,39 @@ public class FootBot extends AbilityBot {
 
   @PostConstruct
   public void startBotSession() {
-    if (botSession != null) {
-      log.warn("Bot session is already started. Skipping double start.");
+    if (!botProperties.isEnabled()) {
+      log.info("FootBot отключен.");
       return;
     }
-    log.debug("Starting FootBot session...");
+    if (botSession != null) {
+      log.warn("FootBot сессия уже открыта. Пропускаю.");
+      return;
+    }
+    log.debug("Открываю FootBot сессию...");
+    Stopwatch stopwatch = Stopwatch.createStarted();
     try {
       TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
       botSession = telegramBotsApi.registerBot(this);
-      log.info("FootBot session started.");
+      stopwatch.stop();
+      log.info("FootBot сессия открыта за {}.", stopwatch);
 
     } catch (TelegramApiException e) {
+      stopwatch.stop();
       log.error("Failed to register FootBot with Telegram API", e);
     }
   }
 
   @PreDestroy
   public void stopBotSession() {
-    log.debug("FootBot session is about to stop...");
+    if (botSession == null) {
+      log.info("FootBot сессия не открыта. Пропускаю закрытие.");
+      return;
+    }
+    log.debug("Закрываю FootBot сессию...");
+    Stopwatch stopwatch = Stopwatch.createStarted();
     botSession.stop();
-    log.info("FootBot session stopped.");
+    stopwatch.stop();
+    log.info("FootBot сессия закрыта за {}.", stopwatch);
   }
 
   @SuppressWarnings("unused")
@@ -141,15 +155,35 @@ public class FootBot extends AbilityBot {
     }
   }
 
-  private Integer sendEventViaBot(Event event, Map<String, Object> metaData) {
+  private org.springframework.messaging.Message<Message> sendEventViaBot(Event event, Map<String, Object> metaData) {
     try {
       Integer userId = (Integer) metaData.get(USER_ID_HEADER);
-      SendMessage message = new SendMessage(valueOf(userId), helper.composeEventText(event, metaData));
-      message.enableMarkdown(true);
-      Message sentMessage = sender.execute(message);
-      Integer messageId = sentMessage.getMessageId();
-      log.debug("Отправлено Telegram сообщение с id={}: {}", messageId, sentMessage.getText());
-      return messageId;
+      Long chatId = Long.valueOf(userId);
+      Integer editableMessageId = (Integer) metaData.get(EDITABLE_MESSAGE_ID_HEADER);
+      String messageText = helper.composeEventText(event, metaData);
+      Message sentTelegramMessage;
+
+      if (editableMessageId != null) {
+        log.debug("Редактирую сообщение {} для пользователя {}: {}", editableMessageId, userId, messageText);
+        EditMessageText editMessage = new EditMessageText();
+        editMessage.setMessageId(editableMessageId);
+        editMessage.enableMarkdown(true);
+        editMessage.setChatId(chatId);
+        editMessage.setText(messageText);
+        sentTelegramMessage = (Message) sender.execute(editMessage);
+
+      } else {
+        SendMessage sendMessage = new SendMessage(chatId, messageText);
+        sendMessage.enableMarkdown(true);
+        sentTelegramMessage = sender.execute(sendMessage);
+      }
+
+      Integer messageId = sentTelegramMessage.getMessageId();
+      log.debug("Отправлено сообщение {} пользователю {}: {}", messageId, userId, sentTelegramMessage.getText());
+      return withPayload(sentTelegramMessage)
+          .copyHeaders(metaData)
+          .setHeader(EVENT_ID_HEADER, event.getId())
+          .build();
 
     } catch (TelegramApiRequestException e) {
       log.error(format("Не удалось отправить сообщение: %s", e.toString()), e);

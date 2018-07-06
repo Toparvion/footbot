@@ -109,6 +109,13 @@ sportexpress:
       date: 03.07.18 21:00 Europe/Moscow
       title: Колумбия - Англия
 
+    - id: 236391
+      date: 06.07.18 17:00 Europe/Moscow
+      title: Уругвай - Франция
+    - id: 236392
+      date: 06.07.18 21:00 Europe/Moscow
+      title: Бразилия - Бельгия
+
   # date: 21.06.18 18:00 Asia/Novosibirsk
 
 logging:

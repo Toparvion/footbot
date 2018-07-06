@@ -1,6 +1,6 @@
 package ru.toparvion.sample.footbot.flow;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,15 +13,21 @@ import org.springframework.integration.dsl.context.IntegrationFlowRegistration;
 import org.springframework.integration.handler.GenericHandler;
 import org.springframework.integration.handler.MessageProcessor;
 import org.springframework.integration.handler.advice.IdempotentReceiverInterceptor;
+import org.springframework.integration.jdbc.BeanPropertySqlParameterSourceFactory;
+import org.springframework.integration.jdbc.JdbcMessageHandler;
 import org.springframework.integration.jdbc.metadata.JdbcMetadataStore;
 import org.springframework.integration.selector.MetadataStoreSelector;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.messaging.Message;
+import ru.toparvion.sample.footbot.dao.MessageDao;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Event;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Type;
 import ru.toparvion.sample.footbot.util.Util;
 
+import static java.lang.Integer.toHexString;
+import static java.lang.String.format;
 import static java.util.Collections.singletonMap;
+import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.springframework.integration.dsl.IntegrationFlows.from;
@@ -37,10 +43,12 @@ import static ru.toparvion.sample.footbot.util.IntegrationConstants.*;
  */
 @Configuration
 @Slf4j
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BroadcastFlowConfig {
 
   private final IntegrationFlowContext flowContext;
+  private final JdbcTemplate jdbcTemplate;
+  private final MessageDao messageDao;
 
   /**
    * Общая часть конвейера (единственная)
@@ -70,9 +78,11 @@ public class BroadcastFlowConfig {
         from(BROADCAST_CHANNEL)
             .filter(Event.class, event -> filterRelevantEvent(event, level))
             .enrichHeaders(singletonMap(USER_ID_HEADER, userId))
-            .log(BroadcastFlowConfig::composeEventLogRecord)
+            .enrichHeaders(h -> h.headerFunction(EDITABLE_MESSAGE_ID_HEADER, this::detectEditableMessage))
+            .log(TRACE, BroadcastFlowConfig::composeEventLogRecord)
             .handle(Event.class, sendingCallback)
-            .log(TRACE, this::saveMessageId)
+            .filter(format("!headers.containsKey('%s')", EDITABLE_MESSAGE_ID_HEADER))
+            .handle(dbSaver())
             .get();
     // ... и тут же вводим его в эксплуатацию.
     IntegrationFlowRegistration userFlowRegistration =
@@ -82,6 +92,22 @@ public class BroadcastFlowConfig {
             .register();
     log.info("Зарегистрирован подписчик {} с уровнем {} (регистрация {})", userId, level,
         userFlowRegistration.getId());
+  }
+
+  private Integer detectEditableMessage(Message<Event> eventMessage) {
+    String matchId = eventMessage.getHeaders().get(MATCH_ID_HEADER, String.class);
+    String eventId = eventMessage.getPayload().getId();
+    Integer chatId = eventMessage.getHeaders().get(USER_ID_HEADER, Integer.class);
+    return messageDao.findEditableMessageId(matchId, eventId, chatId)
+                     .orElse(null);
+  }
+
+  @Bean
+  public JdbcMessageHandler dbSaver() {
+    String sql = messageDao.getInsertSql();
+    JdbcMessageHandler jdbcMessageHandler = new JdbcMessageHandler(jdbcTemplate, sql);
+    jdbcMessageHandler.setSqlParameterSourceFactory(new BeanPropertySqlParameterSourceFactory());
+    return jdbcMessageHandler;
   }
 
   private boolean filterRelevantEvent(Event event, Type userLevel) {
@@ -94,15 +120,9 @@ public class BroadcastFlowConfig {
   }
 
   private static String composeEventLogRecord(Message<Event> message) {
-    return String.format("Пользователь %d, событие матча: тип=%s, время=%s, комментарий=%s",
+    return format("Отправляю событие пользователю %d: тип=%s, время=%s, комментарий=%s",
             message.getHeaders().get(USER_ID_HEADER, Integer.class), message.getPayload().getType(),
             message.getPayload().getFullMinute(), message.getPayload().getText());
-  }
-
-  private String saveMessageId(Message<Integer> message) {
-    // TODO пока просто логируем
-    return String.format("Сообщение с id=%s отправлено пользователю %s", message.getPayload(),
-        message.getHeaders().get(USER_ID_HEADER));
   }
 
   /**
@@ -136,7 +156,9 @@ public class BroadcastFlowConfig {
     Event event = (Event) eventMessage.getPayload();
     String eventId = event.getId();
     String matchId = eventMessage.getHeaders().get(MATCH_ID_HEADER, String.class);
-    return matchId + '_' + eventId;
+    String hash = toHexString(hash(event.getText(), event.getKind(), event.getPlayer(), event.getPlayerIn(),
+        event.getPlayerOut(), event.getCommand(), event.getFullMinute()));
+    return format("%s_%s_%s", matchId, eventId, hash);
   }
 
 }
