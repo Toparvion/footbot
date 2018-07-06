@@ -36,7 +36,7 @@ public class MessageDao {
     SqlParameterSource params = new MapSqlParameterSource()
         .addValue("matchId", matchId)
         .addValue("eventId", eventId)
-        .addValue("chatId", chatId);
+        .addValue("chatId", String.valueOf(chatId));
     try {
       return Optional.ofNullable(
           jdbcTemplate.queryForObject(sql, params, Integer.class));
