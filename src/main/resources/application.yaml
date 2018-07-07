@@ -116,6 +116,17 @@ sportexpress:
       date: 06.07.18 21:00 Europe/Moscow
       title: Бразилия - Бельгия
 
+    - id: 236394
+      date: 07.07.18 17:00 Europe/Moscow
+      title: Швеция - Англия
+    - id: 236393
+      date: 07.07.18 21:00 Europe/Moscow
+      title: Россия - Хорватия
+
+    - id: 236395
+      date: 10.07.18 21:00 Europe/Moscow
+      title: Франция - Бельгия
+
   # date: 21.06.18 18:00 Asia/Novosibirsk
 
 logging:
