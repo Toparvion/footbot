@@ -153,11 +153,14 @@ public class FootBot extends AbilityBot {
     } else {
       silent.sendMd(answerText, chatId);
     }
+
+    String creatorNotification = helper.composeCreatorUserRegistrationNotification(botUser);
+    silent.sendMd(creatorNotification, creatorId());
   }
 
   private org.springframework.messaging.Message<Message> sendEventViaBot(Event event, Map<String, Object> metaData) {
+    Integer userId = (Integer) metaData.get(USER_ID_HEADER);
     try {
-      Integer userId = (Integer) metaData.get(USER_ID_HEADER);
       Long chatId = Long.valueOf(userId);
       Integer editableMessageId = (Integer) metaData.get(EDITABLE_MESSAGE_ID_HEADER);
       String messageText = helper.composeEventText(event, metaData);
@@ -186,11 +189,11 @@ public class FootBot extends AbilityBot {
           .build();
 
     } catch (TelegramApiRequestException e) {
-      log.error(format("Не удалось отправить сообщение: %s", e.toString()), e);
+      log.error(format("Не удалось отправить событие %s пользователю %s: %s", event.getId(), userId, e.toString()), e);
       return null;
 
     } catch (TelegramApiException e) {
-      log.error("Не удалось отправить сообщение: ", e);
+      log.error(format("Не удалось отправить событие %s пользователю %s", event.getId(), userId), e);
       return null;
     }
   }
@@ -221,7 +224,7 @@ public class FootBot extends AbilityBot {
     log.debug("Восстанавливаю подписки по {} пользователям...", botUsers.size());
     for (BotUser botUser: botUsers) {
       flowConfig.startUserFlow(botUser.getUserId(), botUser.getLevelAsType(), this::sendEventViaBot);
-      log.debug("Подписка пользователя {} ({}) с уровнем {} восстановлена.", botUser.getUserId(),
+      log.info("Подписка пользователя {} ({}) с уровнем {} восстановлена.", botUser.getUserId(),
           botUser.getUserName(), botUser.getLevel());
     }
   }

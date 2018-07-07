@@ -12,17 +12,23 @@ import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import ru.toparvion.sample.footbot.model.config.Schedule;
+import ru.toparvion.sample.footbot.model.config.ScheduledMatch;
+import ru.toparvion.sample.footbot.model.db.BotUser;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Event;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Type;
 
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import static java.time.ZonedDateTime.now;
 import static java.util.Collections.singletonList;
+import static java.util.Comparator.comparing;
 import static org.springframework.util.StringUtils.hasText;
 import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_OVERTIME_SCORE_HEADER;
 import static ru.toparvion.sample.footbot.util.IntegrationConstants.CURRENT_MATCH_SCORE_HEADER;
@@ -39,6 +45,7 @@ import static ru.toparvion.sample.footbot.util.Util.nvls;
 public class InteractionHelper implements InitializingBean {
 
   private final ResourceLoader resourceLoader;
+  private final Schedule schedule;
   private Properties textProps;
 
   void composeSelectMarkup(SendMessage sendMessageCommand) {
@@ -66,12 +73,14 @@ public class InteractionHelper implements InitializingBean {
 
   String composeLevelSelectAnswer(Type selectedLevel) {
     String answerText;
+    String nearestMatchTime = findNearestMatchTime();
     switch (selectedLevel) {
       case text:
-        answerText = String.format("%s\n%s\n\n%s",
+        answerText = String.format("%s\n%s\n\n%s\n%s",
             textProps.getProperty("subscription.activated.prefix"),
             textProps.getProperty("level." + selectedLevel.name()),
-            textProps.getProperty("subscription.activated.suffix"));
+            textProps.getProperty("subscription.activated.suffix"),
+            textProps.getProperty("subscription.activated.postfix") + nearestMatchTime);
         break;
       case none:
         answerText = textProps.getProperty("subscription.deactivated-answer");
@@ -89,12 +98,26 @@ public class InteractionHelper implements InitializingBean {
           levels.append(levelText)
                 .append('\n');
         }
-        answerText = String.format("%s\n%s\n%s",
+        answerText = String.format("%s\n%s\n%s\n%s",
             textProps.getProperty("subscription.activated.prefix"),
             levels.toString(),
-            textProps.getProperty("subscription.activated.suffix"));
+            textProps.getProperty("subscription.activated.suffix"),
+            textProps.getProperty("subscription.activated.postfix") + nearestMatchTime);
     }
     return EmojiParser.parseToUnicode(answerText);
+  }
+
+  private static String composeMatchTime(ScheduledMatch schedule) {
+    String matchStartTime = schedule.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yy HH:mm"));
+    return String.format(" _%s_ состоится *%s* по Москве.", schedule.getTitle(), matchStartTime);
+  }
+
+  private String findNearestMatchTime() {
+    return schedule.getSchedule().stream()
+        .filter(match -> match.getDate().isAfter(now()))
+        .min(comparing(ScheduledMatch::getDate))
+        .map(InteractionHelper::composeMatchTime)
+        .orElse(" пока не предвидится.");
   }
 
   String composeEventText(Event event, Map<String, Object> metaData) {
@@ -178,6 +201,12 @@ public class InteractionHelper implements InitializingBean {
       sb.append(" (@").append(user.getUserName()).append(")");
     }
     return sb.toString();
+  }
+
+  String composeCreatorUserRegistrationNotification(BotUser botUser) {
+    String messageTemplate = textProps.getProperty("creator.notification.user-registration");
+    String message = String.format(messageTemplate, botUser.getUserName(), botUser.getUserId(), botUser.getLevel());
+    return EmojiParser.parseToUnicode(message);
   }
 
   @Override
