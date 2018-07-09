@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import ru.toparvion.sample.footbot.model.db.BotUser;
+import ru.toparvion.sample.footbot.model.sportexpress.event.Type;
 
 import java.util.List;
 
@@ -34,6 +36,18 @@ public class UserDao {
             " SET USER_ID=:userId, USER_NAME=:userName, LEVEL=:level";
 
     SqlParameterSource params = new BeanPropertySqlParameterSource(botUser);
+    jdbcTemplate.update(sql, params);
+  }
+
+  public void updateUserLevel(int userId, Type newLevel) {
+    String sql = 
+        "UPDATE bot_users" +
+        " SET LEVEL=:newLevel" +
+        " WHERE USER_ID=:userId";
+
+    SqlParameterSource params = new MapSqlParameterSource()
+        .addValue("userId", String.valueOf(userId))
+        .addValue("newLevel", newLevel.name());
     jdbcTemplate.update(sql, params);
   }
 

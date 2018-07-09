@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.lang.String.format;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.integration.support.MessageBuilder.withPayload;
 import static org.telegram.abilitybots.api.objects.Locality.USER;
 import static org.telegram.abilitybots.api.objects.Privacy.PUBLIC;
@@ -190,6 +191,7 @@ public class FootBot extends AbilityBot {
 
     } catch (TelegramApiRequestException e) {
       log.error(format("Не удалось отправить событие %s пользователю %s: %s", event.getId(), userId, e.toString()), e);
+      postProcessException(e, userId);
       return null;
 
     } catch (TelegramApiException e) {
@@ -212,6 +214,19 @@ public class FootBot extends AbilityBot {
     String helpText = helper.composeHelpText();
     silent.sendMd(helpText, chatId);
     log.info("Отправлена справка в чат {}.", chatId);
+  }
+
+  private void postProcessException(TelegramApiRequestException telegramException, Integer userId) {
+    try {
+      if (telegramException.getErrorCode() == FORBIDDEN.value()) {
+        log.warn("Пользователь {} заблокировал бота. Выставляю ему уровень подписки 'none'.");
+        userDao.updateUserLevel(userId, Type.none);
+      }
+      silent.sendMd(helper.composeCreatorUserBlockedNotification(userId), creatorId());
+
+    } catch (Exception e) {
+      log.error(format("Не удалось выполнить постобработку Telegram исключения для польователя %s.", userId), e);
+    }
   }
 
   @EventListener(ApplicationStartedEvent.class)

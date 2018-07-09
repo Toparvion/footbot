@@ -209,6 +209,12 @@ public class InteractionHelper implements InitializingBean {
     return EmojiParser.parseToUnicode(message);
   }
 
+  String composeCreatorUserBlockedNotification(int userId) {
+    String messageTemplate = textProps.getProperty("creator.notification.blocked-user-excluded");
+    String message = String.format(messageTemplate, userId);
+    return EmojiParser.parseToUnicode(message);
+  }
+
   @Override
   public void afterPropertiesSet() throws Exception {
     Resource textResource = resourceLoader.getResource("classpath:text.properties");
