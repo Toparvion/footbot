@@ -20,16 +20,19 @@ import org.springframework.integration.selector.MetadataStoreSelector;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.messaging.Message;
 import ru.toparvion.sample.footbot.dao.MessageDao;
+import ru.toparvion.sample.footbot.model.config.Schedule;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Event;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Type;
 import ru.toparvion.sample.footbot.util.Util;
+
+import java.time.temporal.ChronoUnit;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Integer.toHexString;
 import static java.lang.String.format;
 import static java.util.Collections.singletonMap;
 import static java.util.Objects.hash;
 import static java.util.Objects.requireNonNull;
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.springframework.integration.dsl.IntegrationFlows.from;
 import static org.springframework.integration.dsl.Pollers.fixedDelay;
 import static org.springframework.integration.dsl.channel.MessageChannels.publishSubscribe;
@@ -55,8 +58,10 @@ public class BroadcastFlowConfig {
    */
   @Bean
   public IntegrationFlow broadcastFlow(MatchEventsProvider matchEventsProvider,
-                                       IdempotentReceiverInterceptor antiDuplicateSubFilter) {
-    return from(matchEventsProvider, spec -> spec.poller(fixedDelay(30, SECONDS, 20)))
+                                       IdempotentReceiverInterceptor antiDuplicateSubFilter,
+                                       Schedule schedule) {
+    long pollPeriodSec = schedule.getPollPeriod().get(ChronoUnit.SECONDS);
+    return from(matchEventsProvider, spec -> spec.poller(fixedDelay(pollPeriodSec, TimeUnit.SECONDS, 20)))
           .split()
           .filter(Event.class, event -> !(event.getType() == text && !hasText(event.getText())),
                   spec -> spec.advice(antiDuplicateSubFilter))

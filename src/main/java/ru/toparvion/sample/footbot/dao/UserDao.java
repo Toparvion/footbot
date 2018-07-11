@@ -29,7 +29,7 @@ public class UserDao {
   public void saveUser(BotUser botUser) {
     // грязный хак для учета различий в синтаксисах SQL в H2 и PostgreSQL
     String sql = isH2enabled
-        ? "MERGE INTO BOT_USERS KEY(USER_ID) VALUES(:userId, :userName, :level)"
+        ? "MERGE INTO BOT_USERS KEY(USER_ID) VALUES(:userId, :userName, :level, current_date)"
         : "INSERT INTO BOT_USERS VALUES(:userId, :userName, :level) " +
             "ON CONFLICT (USER_ID) " +
             "DO UPDATE " +
@@ -40,7 +40,7 @@ public class UserDao {
   }
 
   public void updateUserLevel(int userId, Type newLevel) {
-    String sql = 
+    String sql =
         "UPDATE bot_users" +
         " SET LEVEL=:newLevel" +
         " WHERE USER_ID=:userId";

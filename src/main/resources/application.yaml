@@ -13,10 +13,11 @@ telegram:
   bot:
     name: ToparvionFootBot
     token: [taken-from-env]
-    creatorId: 129560882
+    creatorId: -1
 
 sportexpress:
   broadcastUri: https://www.sport-express.ru/services/match/football/{matchId}/online/se/?json=1
+  pollPeriod: 30s
   schedule:
     - id: 236351
       date: 27.06.18 19:00 Asia/Novosibirsk
@@ -126,6 +127,10 @@ sportexpress:
     - id: 236395
       date: 10.07.18 21:00 Europe/Moscow
       title: Франция - Бельгия
+
+    - id: 236396
+      date: 11.07.18 21:00 Europe/Moscow
+      title: Хорватия - Англия
 
   # date: 21.06.18 18:00 Asia/Novosibirsk
 

@@ -2,7 +2,6 @@ package ru.toparvion.sample.footbot.flow;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.integration.core.MessageSource;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
@@ -30,15 +29,11 @@ public class MatchEventsProvider implements MessageSource<List<Event>> {
   private static final int afterStartGapMinutes = 180;
 
   private final Schedule schedule;
-  private final String infoSourceUri;
-
   private final RestTemplate restTemplate;
 
   @Autowired
-  public MatchEventsProvider(Schedule schedule,
-                             @Value("${sportexpress.broadcastUri}") String broadcastUri) {
+  public MatchEventsProvider(Schedule schedule) {
     this.schedule = schedule;
-    this.infoSourceUri = broadcastUri;
     restTemplate = new RestTemplate();
   }
 
@@ -55,7 +50,7 @@ public class MatchEventsProvider implements MessageSource<List<Event>> {
     StopWatch stopWatch = new StopWatch();
     stopWatch.start();
 
-    Match actingMatch = restTemplate.getForObject(infoSourceUri, Match.class, scheduledMatch.getId());
+    Match actingMatch = restTemplate.getForObject(schedule.getBroadcastUri(), Match.class, scheduledMatch.getId());
     if (actingMatch == null) {
       log.error("Не найден матч '{}' по id={}", scheduledMatch.getTitle(), scheduledMatch.getId());
       return null;

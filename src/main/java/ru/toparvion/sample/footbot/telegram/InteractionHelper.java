@@ -3,10 +3,10 @@ package ru.toparvion.sample.footbot.telegram;
 import com.vdurmont.emoji.EmojiParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.User;
@@ -18,13 +18,11 @@ import ru.toparvion.sample.footbot.model.db.BotUser;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Event;
 import ru.toparvion.sample.footbot.model.sportexpress.event.Type;
 
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 
 import static java.time.ZonedDateTime.now;
 import static java.util.Collections.singletonList;
@@ -42,15 +40,15 @@ import static ru.toparvion.sample.footbot.util.Util.nvls;
 @Component
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class InteractionHelper implements InitializingBean {
+public class InteractionHelper implements ApplicationContextAware {
 
-  private final ResourceLoader resourceLoader;
   private final Schedule schedule;
-  private Properties textProps;
+  private ApplicationContext appContext;
+  private final Locale locale = new Locale("ru", "RU");
 
   void composeSelectMarkup(SendMessage sendMessageCommand) {
     sendMessageCommand.enableMarkdown(true);
-    sendMessageCommand.setText(textProps.getProperty("start.select-description"));
+    sendMessageCommand.setText(getMessage("start.select-description"));
 
     InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
     List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
@@ -59,7 +57,7 @@ public class InteractionHelper implements InitializingBean {
     for (int i = startIdx; i >= 0; i--) {
       Type type = types[i];
       InlineKeyboardButton button = new InlineKeyboardButton();
-      String buttonText = EmojiParser.parseToUnicode(textProps.getProperty("level." + type.name(), type.name()));
+      String buttonText = EmojiParser.parseToUnicode(getMessage("level." + type.name()));
       if ((i <= (types.length - 6)) && (i >= 1)) {
         buttonText = "и " + buttonText;
       }
@@ -71,19 +69,27 @@ public class InteractionHelper implements InitializingBean {
     sendMessageCommand.setReplyMarkup(inlineKeyboardMarkup);
   }
 
+  private String getMessage(String code) {
+    return getMessage(code, (Object[]) null);
+  }
+
+  private String getMessage(String code, Object ... args) {
+    return appContext.getMessage(code, args, locale);
+  }
+
   String composeLevelSelectAnswer(Type selectedLevel) {
     String answerText;
     String nearestMatchTime = findNearestMatchTime();
     switch (selectedLevel) {
       case text:
-        answerText = String.format("%s\n%s\n\n%s\n%s",
-            textProps.getProperty("subscription.activated.prefix"),
-            textProps.getProperty("level." + selectedLevel.name()),
-            textProps.getProperty("subscription.activated.suffix"),
-            textProps.getProperty("subscription.activated.postfix") + nearestMatchTime);
+        answerText = String.format("%s\n%s\n%s\n\n%s",
+            getMessage("subscription.activated.prefix"),
+            getMessage("level." + selectedLevel.name()),
+            getMessage("subscription.activated.suffix"),
+            getMessage("subscription.activated.postfix") + nearestMatchTime);
         break;
       case none:
-        answerText = textProps.getProperty("subscription.deactivated-answer");
+        answerText = getMessage("subscription.deactivated-answer");
         break;
       default:
         StringBuilder levels = new StringBuilder();
@@ -91,7 +97,7 @@ public class InteractionHelper implements InitializingBean {
         int startIdx = types.length - 5;    // to account two penalty types and artificial type 'none'
         for (int i = startIdx; i >= selectedLevel.ordinal(); i--) {
           String level = types[i].name();
-          String levelText = textProps.getProperty("level." + level);
+          String levelText = getMessage("level." + level);
           if (i != startIdx) {
             levels.append("и ");
           }
@@ -99,10 +105,10 @@ public class InteractionHelper implements InitializingBean {
                 .append('\n');
         }
         answerText = String.format("%s\n%s\n%s\n%s",
-            textProps.getProperty("subscription.activated.prefix"),
+            getMessage("subscription.activated.prefix"),
             levels.toString(),
-            textProps.getProperty("subscription.activated.suffix"),
-            textProps.getProperty("subscription.activated.postfix") + nearestMatchTime);
+            getMessage("subscription.activated.suffix"),
+            getMessage("subscription.activated.postfix") + nearestMatchTime);
     }
     return EmojiParser.parseToUnicode(answerText);
   }
@@ -188,7 +194,7 @@ public class InteractionHelper implements InitializingBean {
   }
 
   String composeHelpText() {
-    String helpText = textProps.getProperty("help.text");
+    String helpText = getMessage("help.text");
     return EmojiParser.parseToUnicode(helpText);
   }
 
@@ -204,23 +210,18 @@ public class InteractionHelper implements InitializingBean {
   }
 
   String composeCreatorUserRegistrationNotification(BotUser botUser) {
-    String messageTemplate = textProps.getProperty("creator.notification.user-registration");
-    String message = String.format(messageTemplate, botUser.getUserName(), botUser.getUserId(), botUser.getLevel());
+    String message = getMessage("creator.notification.user-registration", botUser.getUserName(),
+        botUser.getUserId(), botUser.getLevel());
     return EmojiParser.parseToUnicode(message);
   }
 
   String composeCreatorUserBlockedNotification(int userId) {
-    String messageTemplate = textProps.getProperty("creator.notification.blocked-user-excluded");
-    String message = String.format(messageTemplate, userId);
+    String message = getMessage("creator.notification.blocked-user-excluded", userId);
     return EmojiParser.parseToUnicode(message);
   }
 
   @Override
-  public void afterPropertiesSet() throws Exception {
-    Resource textResource = resourceLoader.getResource("classpath:text.properties");
-    textProps = new Properties();
-    InputStreamReader isr = new InputStreamReader(textResource.getInputStream(), StandardCharsets.UTF_8);
-    textProps.load(isr);
-    log.debug("Текстовый ресурс успещно загружен: {} сообщений.", textProps.size());
+  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    appContext = applicationContext;
   }
 }

@@ -2,6 +2,7 @@ package ru.toparvion.sample.footbot.telegram;
 
 import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
@@ -36,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 
 import static java.lang.String.format;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.integration.support.MessageBuilder.withPayload;
 import static org.telegram.abilitybots.api.objects.Locality.USER;
 import static org.telegram.abilitybots.api.objects.Privacy.PUBLIC;
@@ -190,8 +190,7 @@ public class FootBot extends AbilityBot {
           .build();
 
     } catch (TelegramApiRequestException e) {
-      log.error(format("Не удалось отправить событие %s пользователю %s: %s", event.getId(), userId, e.toString()), e);
-      postProcessException(e, userId);
+      handleTgApiException(e, userId, event.getId());
       return null;
 
     } catch (TelegramApiException e) {
@@ -216,16 +215,20 @@ public class FootBot extends AbilityBot {
     log.info("Отправлена справка в чат {}.", chatId);
   }
 
-  private void postProcessException(TelegramApiRequestException telegramException, Integer userId) {
+  private void handleTgApiException(TelegramApiRequestException telegramException, Integer userId, String eventId) {
     try {
-      if (telegramException.getErrorCode() == FORBIDDEN.value()) {
-        log.warn("Пользователь {} заблокировал бота. Выставляю ему уровень подписки 'none'.");
-        userDao.updateUserLevel(userId, Type.none);
+      log.error("Не удалось отправить событие {} пользователю {}: {}", eventId, userId, telegramException.toString());
+      switch (telegramException.getErrorCode()) {
+        case HttpStatus.SC_FORBIDDEN:
+          log.warn("Пользователь {} заблокировал бота. Выставляю ему уровень подписки 'none'.");
+          userDao.updateUserLevel(userId, Type.none);
+          silent.sendMd(helper.composeCreatorUserBlockedNotification(userId), creatorId());
+          break;
+        // case: другие особые коды
       }
-      silent.sendMd(helper.composeCreatorUserBlockedNotification(userId), creatorId());
 
     } catch (Exception e) {
-      log.error(format("Не удалось выполнить постобработку Telegram исключения для польователя %s.", userId), e);
+      log.error(format("Не удалось выполнить обработку Telegram исключения для польователя %s.", userId), e);
     }
   }
 
