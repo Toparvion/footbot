@@ -67,7 +67,7 @@ public class UserDao {
             "where user_id = :userId";
     try {
       return Optional.ofNullable(
-          jdbcTemplate.queryForObject(sql, singletonMap("userId", chatId), Type.class));
+          jdbcTemplate.queryForObject(sql, singletonMap("userId", String.valueOf(chatId)), Type.class));
 
     } catch (EmptyResultDataAccessException e) {
       return Optional.empty();
