@@ -132,6 +132,14 @@ sportexpress:
       date: 11.07.18 21:00 Europe/Moscow
       title: Хорватия - Англия
 
+    - id: 236397
+      date: 14.07.18 17:00 Europe/Moscow
+      title: Бельгия - Англия
+
+    - id: 236398
+      date: 15.07.18 18:00 Europe/Moscow
+      title: Франция - Хорватия
+
   # date: 21.06.18 18:00 Asia/Novosibirsk
 
 logging:

@@ -7,6 +7,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.User;
@@ -46,7 +47,7 @@ public class InteractionHelper implements ApplicationContextAware {
   private ApplicationContext appContext;
   private final Locale locale = new Locale("ru", "RU");
 
-  void composeSelectMarkup(SendMessage sendMessageCommand) {
+  void composeSelectMarkup(SendMessage sendMessageCommand, @Nullable Type chosenType) {
     sendMessageCommand.enableMarkdown(true);
     sendMessageCommand.setText(getMessage("start.select-description"));
 
@@ -57,24 +58,19 @@ public class InteractionHelper implements ApplicationContextAware {
     for (int i = startIdx; i >= 0; i--) {
       Type type = types[i];
       InlineKeyboardButton button = new InlineKeyboardButton();
-      String buttonText = EmojiParser.parseToUnicode(getMessage("level." + type.name()));
+      StringBuilder buttonText = new StringBuilder(getMessage("level." + type.name()));
       if ((i <= (types.length - 6)) && (i >= 1)) {
-        buttonText = "и " + buttonText;
+        buttonText.insert(0, "и ");
       }
-      button.setText(buttonText);
+      if (type == chosenType) {
+        buttonText.append(" ").append(getMessage("level.chosen.suffix"));
+      }
+      button.setText(EmojiParser.parseToUnicode(buttonText.toString()));
       button.setCallbackData(type.name());
       buttons.add(singletonList(button));
     }
     inlineKeyboardMarkup.setKeyboard(buttons);
     sendMessageCommand.setReplyMarkup(inlineKeyboardMarkup);
-  }
-
-  private String getMessage(String code) {
-    return getMessage(code, (Object[]) null);
-  }
-
-  private String getMessage(String code, Object ... args) {
-    return appContext.getMessage(code, args, locale);
   }
 
   String composeLevelSelectAnswer(Type selectedLevel) {
@@ -99,12 +95,12 @@ public class InteractionHelper implements ApplicationContextAware {
           String level = types[i].name();
           String levelText = getMessage("level." + level);
           if (i != startIdx) {
-            levels.append("и ");
+            levels.append('\n')
+                  .append("и ");
           }
-          levels.append(levelText)
-                .append('\n');
+          levels.append(levelText);
         }
-        answerText = String.format("%s\n%s\n%s\n%s",
+        answerText = String.format("%s\n%s\n%s\n\n%s",
             getMessage("subscription.activated.prefix"),
             levels.toString(),
             getMessage("subscription.activated.suffix"),
@@ -114,7 +110,7 @@ public class InteractionHelper implements ApplicationContextAware {
   }
 
   private static String composeMatchTime(ScheduledMatch schedule) {
-    String matchStartTime = schedule.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yy HH:mm"));
+    String matchStartTime = schedule.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yy 'в' HH:mm"));
     return String.format(" _%s_ состоится *%s* по Москве.", schedule.getTitle(), matchStartTime);
   }
 
@@ -218,6 +214,14 @@ public class InteractionHelper implements ApplicationContextAware {
   String composeCreatorUserBlockedNotification(int userId) {
     String message = getMessage("creator.notification.blocked-user-excluded", userId);
     return EmojiParser.parseToUnicode(message);
+  }
+
+  private String getMessage(String code) {
+    return getMessage(code, (Object[]) null);
+  }
+
+  private String getMessage(String code, Object ... args) {
+    return appContext.getMessage(code, args, locale);
   }
 
   @Override

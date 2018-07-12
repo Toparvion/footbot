@@ -35,6 +35,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.lang.String.format;
 import static org.springframework.integration.support.MessageBuilder.withPayload;
@@ -202,7 +203,8 @@ public class FootBot extends AbilityBot {
   private void listLevels(MessageContext ctx) {
     SendMessage sendMessageCommand = new SendMessage();
     sendMessageCommand.setChatId(ctx.chatId());
-    helper.composeSelectMarkup(sendMessageCommand);
+    Optional<Type> chosenType = userDao.fetchUserLevel(ctx.chatId());
+    helper.composeSelectMarkup(sendMessageCommand, chosenType.orElse(null));
     silent.execute(sendMessageCommand);
     log.info("Отправлены варианты выбора.");
   }
